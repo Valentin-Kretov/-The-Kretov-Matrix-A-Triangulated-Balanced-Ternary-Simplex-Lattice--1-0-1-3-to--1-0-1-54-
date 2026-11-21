@@ -32,7 +32,7 @@ def build_interactive_matrix():
         ( 1,  1,  0): ("Atmospheric Angle (theta_23^PMNS)", "45.00 deg", "Layer III: Geometry"),
         ( 1,  1,  1): ("Reactor Angle (theta_13^PMNS)", "8.54 deg", "Layer III: Geometry"),
     }
-        nodes = list(itertools.product([-1, 0, 1], repeat=3))
+    nodes = list(itertools.product([-1, 0, 1], repeat=3))
     ex, ey, ez = [], [], []
     for i in range(27):
         for j in range(i + 1, 27):

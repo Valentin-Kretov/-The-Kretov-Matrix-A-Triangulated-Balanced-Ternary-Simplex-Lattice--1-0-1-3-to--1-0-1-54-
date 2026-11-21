@@ -2,7 +2,7 @@
 
 [![Kretov Matrix Verification](https://github.com)](https://github.com)
 
-🚀 **[Launch Interactive 3D Kretov Matrix (27 Nodes & 54 Tensegrity Edges)](https://github.io)**
+🚀 **[Launch Interactive 3D Kretov Matrix (27 Nodes & 54 Tensegrity Edges)](https://valentin-kretov.github.io/-The-Kretov-Matrix-A-Triangulated-Balanced-Ternary-Simplex-Lattice--1-0-1-3-to--1-0-1-54-/)**
 
 
 # The Kretov Matrix: A Triangulated Balanced Ternary Simplex Lattice ($\{-1, 0, +1\}^3 \to \{-1, 0, +1\}^{54}$) for Unifying Fundamental Physical Constants, Quantum Non-Locality, and Macroscopic Emergence

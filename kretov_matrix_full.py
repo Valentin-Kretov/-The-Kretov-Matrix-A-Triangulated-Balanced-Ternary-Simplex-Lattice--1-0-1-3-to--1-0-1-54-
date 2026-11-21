@@ -104,20 +104,21 @@ def analyze_fractal_ladder():
         0: "Сингулярность / Единое Поле",
         1: "Базовый код полярности {-1, 0, +1}",
         2: "Слой взаимодействий (8 глюонов + фотон)",
-        3: "Матрица Кретова (27 констант физики)",
+        3: "Матрица Кретова (26 констант физики + theta_QCD = 0)",
         4: "4D-гиперрешетка (81 стабильный элемент)",
         5: "Граница молекулярной/ядерной сложности",
         6: "Макро-голограмма (27 x 27 = 729 узлов)"
     }
 
+    kernel = np.ones(3, dtype=int)
     for n in range(7):
         total_states = 3 ** n
         if n == 0:
             zero_states = 1
         else:
-            poly = np.array([1])
+            poly = np.ones(1, dtype=int)
             for _ in range(n):
-                poly = np.convolve(poly, [1, 1, 1])
+                poly = np.convolve(poly, kernel)
             zero_states = poly[n]
 
         balance_pct = (zero_states / total_states) * 100
@@ -160,12 +161,12 @@ def run_stress_tests(seed: int = 42):
     ratio_top_mid = np.mean(non_deg_eigs[:, 2] / non_deg_eigs[:, 1])
     ratio_mid_low = np.mean(non_deg_eigs[:, 1] / non_deg_eigs[:, 0])
 
-    print(f"  [1] Комбинаторика (1M):    Средний заряд = {np.mean(charges):+.6f} | Абс. ноль = {abs_zero:.2f}% | Общ. ноль = {tot_zero:.2f}%")
-    print(f"  [2] Волны (1M):            Зона нулевой интерференции = {wave_zero:.2f}%")
-    print(f"  [3] Квантовый шум (1M):    Автономное самовосстановление = {recovery_pct:.2f}%")
-    print(f"  [4] Операторы 3x3 (100k):  Спектр. радиус = {mean_radius:.4f} (pi = {np.pi:.4f}) | Нулевые моды = {zero_modes:.2f}%")
-    print(f"      Отношения уровней:     lambda_max/lambda_mid = {ratio_top_mid:.4f} (pi/2 = {np.pi/2:.4f})")
-    print(f"                             lambda_mid/lambda_min = {ratio_mid_low:.4f} (1+sqrt(2) = {1+np.sqrt(2):.4f})\n")
+    print(f"  1. Комбинаторика (1M):    Средний заряд = {np.mean(charges):+.6f} | Абс. ноль = {abs_zero:.2f}% | Общ. ноль = {tot_zero:.2f}%")
+    print(f"  2. Волны (1M):            Зона нулевой интерференции = {wave_zero:.2f}%")
+    print(f"  3. Квантовый шум (1M):    Автономное самовосстановление = {recovery_pct:.2f}%")
+    print(f"  4. Операторы 3x3 (100k):  Спектр. радиус = {mean_radius:.4f} (pi = {np.pi:.4f}) | Нулевые моды = {zero_modes:.2f}%")
+    print(f"     Отношения уровней:     lambda_max/lambda_mid = {ratio_top_mid:.4f} (pi/2 = {np.pi/2:.4f})")
+    print(f"                            lambda_mid/lambda_min = {ratio_mid_low:.4f} (1+sqrt(2) = {1+np.sqrt(2):.4f})\n")
 
 def float_to_balanced_ternary(value: float, precision: int = 12) -> str:
     """Переводит вещественное число в сбалансированную троичную запись (-, 0, +)."""
@@ -277,3 +278,4 @@ analyze_fractal_ladder()
 run_stress_tests(seed=42)
 constants_and_neutrino_predictions()
 visualize_3d_lattice()
+

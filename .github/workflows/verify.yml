@@ -26,5 +26,8 @@ jobs:
       - name: Run Exact Combinatorial Audit
         run: python kretov_exact_combinatorics.py
 
+      - name: Verify Delta(27) Group Isomorphism
+        run: python kretov_delta27_isomorphism.py
+
       - name: Run Mathematical Invariants Verification
         run: pytest -v test_invariants.py

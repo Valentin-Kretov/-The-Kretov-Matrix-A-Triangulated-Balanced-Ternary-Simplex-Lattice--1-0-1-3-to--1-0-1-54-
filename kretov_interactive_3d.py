@@ -33,25 +33,20 @@ def build_interactive_matrix():
         ( 1,  1,  1): ("Reactor Angle (theta_13^PMNS)", "8.54 deg", "Layer III: Geometry"),
     }
     def to_merkaba(x, y, z):
-        # Два встречных треугольных контура (-1 вниз, +1 вверх) и равновесный центр (0)
-        angles = {-1: 210.0, 0: 90.0, 1: 330.0}
-        if y == 0 and z == 0:
-            return (0.0, 0.0, x * 1.15)
-        
+        # Прямое симплексное преобразование куба {-1,0,+1}^3 в Звёздчатый октаэдр (Меркабу):
+        # 8 углов (±1,±1,±1) образуют два встречных тетраэдра (+1 вверх и -1 вниз)
         import math
-        # Определяем полярность треугольника: -1 (вниз) или +1 (вверх)
-        polarity = -1 if (y + z) < 0 else (1 if (y + z) > 0 else x)
-        if polarity == 0:
-            polarity = 1 if y >= 0 else -1
-            
-        base_angle = math.radians(90.0 if polarity == 1 else 270.0)
-        sector = (y - z) * math.radians(60.0)
-        radius = 1.45 if abs(y) + abs(z) == 2 else 0.85
-        scale_x = 1.0 - 0.12 * abs(x)
-        
-        px = radius * scale_x * math.cos(base_angle + sector)
-        py = radius * scale_x * math.sin(base_angle + sector)
-        pz = x * 1.15 + (0.25 * polarity)
+        # Поворот вдоль главной диагонали (1,1,1) так, чтобы (1,1,1) смотрел строго вверх (+Z),
+        # а (-1,-1,-1) — строго вниз (-Z)
+        px = (x - y) / math.sqrt(2.0)
+        py = (x + y - 2.0 * z) / math.sqrt(6.0)
+        pz = (x + y + z) / math.sqrt(3.0)
+
+        # Усиливаем вытяжку 8 полярных вершин (±1,±1,±1), чтобы четко проявились лучи Меркабы
+        if abs(x) == 1 and abs(y) == 1 and abs(z) == 1:
+            px *= 1.35
+            py *= 1.35
+            pz *= 1.35
         return (px, py, pz)
 
     nodes = list(itertools.product([-1, 0, 1], repeat=3))

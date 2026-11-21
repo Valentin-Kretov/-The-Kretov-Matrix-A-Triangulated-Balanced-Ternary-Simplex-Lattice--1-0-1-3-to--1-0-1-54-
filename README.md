@@ -4,7 +4,7 @@
 
 **Author:** Valentin Aleksandrovich Kretov (Кретов Валентин Александрович)  
 **Document Type:** Comprehensive Theoretical Preprint & Computational Specification  
-**Version:** 3.2 (Complete Spherical Triangulated & 54D Cosmological Edition)  
+**Version:** 3.3 (Verified Delta(27) Group Embedding & Exact Combinatorial Edition) 
 **DOI:** `10.5281/zenodo.24419887`  
 **License:** MIT (Code) / CC BY 4.0 (Text & Figures)  
 
@@ -183,7 +183,8 @@ To maintain rigorous scientific transparency, we explicitly state the current bo
 
 9. Open Mathematical & Theoretical Research Problems
 
-1. Group-Theoretic Embedding into $\Delta(27)$ and $\Delta(54)$: Construct an explicit isomorphism mapping $\Omega_3$ ($27$ nodes, $54$ edges) onto the irreducible representations of the finite flavor groups $\Delta(27)$ and $\Delta(54)$, deriving $SU(3)_C \times SU(2)_L \times U(1)_Y$ as a low-energy symmetry-breaking limit.
+1. **[VERIFIED IN CODE] Group-Theoretic Embedding into $\Delta(27)$ and $\Delta(54)$:** Explicit bijection $g(x,y,z) = \omega^z C^x D^y$ constructed and verified in `kretov_delta27_isomorphism.py`, mapping the $27$ lattice nodes onto unitary irreps of $\Delta(27)$ ($27 = 9 \times 1^2 + 2 \times 3^2$) and the $54$ tensegrity edges onto its $\mathbb{Z}_2$ semi-direct extension $\Delta(54)$. Deriving $SU(3)_C \times SU(2)_L \times U(1)_Y$ as a low-energy symmetry-breaking limit remains open.
+
 2. Path-Integral Quantization of $S[\Phi, U]$: Derive the spherical triangular correction factors in Section 4.2 directly from loop corrections on the 36 triangular faces of $\Omega_3$.
 3. Analytical Proof of Spectral Ratio Limits ($\pi/2$ and $1+\sqrt{2}$): Using Random Matrix Theory (RMT), derive closed-form analytical PDFs for symmetric $3 \times 3$ and $9 \times 9$ ternary matrices.
 4. Renormalization Group (RG) Flow Along Tensegrity Edges: Determine the unification energy scale $\mu^*$ where the balanced ternary expansions of $\alpha(\mu)$, $\alpha_s(\mu)$, and $\sin^2\theta_W(\mu)$ achieve simultaneous phase alignment.
@@ -197,6 +198,10 @@ To maintain rigorous scientific transparency, we explicitly state the current bo
 • kretov_matrix_full.py — Core $\Omega_3$ triangulated simplex simulation, graph spectrum solver ($k\sqrt{2}$), CGLMP qutrit Bell test, ternary constant encoder, neutrino mass solver, and 3D lattice generator (kretov_matrix_3d.png).
 • kretov_hyper_lattice_7d.py — Scaling audit ($3^0 \to 3^7$), universal complex system stability analyzer, and 14-fold symmetry Petrie rosette visualizer (kretov_7d_rosette.png).
 • kretov_54d_cosmology.py — Exact trinomial polynomial convolution audit for $\Omega_{54}$ ($3^{54}$), micro-stability vs. macro-evolution test, and quantum-to-classical Gaussian transition plotter (kretov_54d_emergence.png).
+- `kretov_exact_combinatorics.py` — Exact exhaustive combinatorial audit of all $3^9 = 19,683$ ternary $3 \times 3$ matrices and $3^6 = 729$ symmetric operators (replacing Monte Carlo approximations with exact analytical fractions).
+- `kretov_delta27_isomorphism.py` — Explicit unitary group isomorphism mapping the $27$ nodes of $\Omega_3$ onto the non-Abelian flavor symmetry group $\Delta(27)$ and its $54$-edge extension $\Delta(54)$.
+- `test_invariants.py` — Automated `pytest` verification suite validating lattice topology ($27$ nodes, $54$ edges, `{1, 3, 6, 7, 6, 3, 1}` degeneracy pyramid), PDG constant accuracy, and CGLMP qutrit Bell bounds.
+
 • CITATION.cff, requirements.txt, & LICENSE — Open Science citation metadata (DOI 10.5281/zenodo.24419887), Python dependencies, and MIT / CC BY 4.0 licenses.
 
 References

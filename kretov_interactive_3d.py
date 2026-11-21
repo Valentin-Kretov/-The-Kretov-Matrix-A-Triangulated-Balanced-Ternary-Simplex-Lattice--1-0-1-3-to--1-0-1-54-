@@ -121,9 +121,3 @@ def build_interactive_matrix():
 
 if __name__ == "__main__":
     build_interactive_matrix()
-
-    fig.write_html("kretov_matrix_3d_interactive.html", include_plotlyjs="cdn")
-
-
-if __name__ == "__main__":
-    build_interactive_matrix()

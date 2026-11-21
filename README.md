@@ -1,5 +1,10 @@
 [![DOI](https://zenodo.org)](https://doi.org)
 
+[![Kretov Matrix Verification](https://github.com)](https://github.com)
+
+🚀 **[Launch Interactive 3D Kretov Matrix (27 Nodes & 54 Tensegrity Edges)](https://github.io)**
+
+
 # The Kretov Matrix: A Triangulated Balanced Ternary Simplex Lattice ($\{-1, 0, +1\}^3 \to \{-1, 0, +1\}^{54}$) for Unifying Fundamental Physical Constants, Quantum Non-Locality, and Macroscopic Emergence
 
 **Author:** Valentin Aleksandrovich Kretov (Кретов Валентин Александрович)  
@@ -201,6 +206,7 @@ To maintain rigorous scientific transparency, we explicitly state the current bo
 - `kretov_exact_combinatorics.py` — Exact exhaustive combinatorial audit of all $3^9 = 19,683$ ternary $3 \times 3$ matrices and $3^6 = 729$ symmetric operators (replacing Monte Carlo approximations with exact analytical fractions).
 - `kretov_delta27_isomorphism.py` — Explicit unitary group isomorphism mapping the $27$ nodes of $\Omega_3$ onto the non-Abelian flavor symmetry group $\Delta(27)$ and its $54$-edge extension $\Delta(54)$.
 - `test_invariants.py` — Automated `pytest` verification suite validating lattice topology ($27$ nodes, $54$ edges, `{1, 3, 6, 7, 6, 3, 1}` degeneracy pyramid), PDG constant accuracy, and CGLMP qutrit Bell bounds.
+- `kretov_interactive_3d.py` — Generates the interactive 3D simplex visualization (`kretov_matrix_3d_interactive.html`) deployed via GitHub Pages.
 
 • CITATION.cff, requirements.txt, & LICENSE — Open Science citation metadata (DOI 10.5281/zenodo.24419887), Python dependencies, and MIT / CC BY 4.0 licenses.
 

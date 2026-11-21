@@ -33,6 +33,7 @@ def run_7d_scaling_audit():
         7: "14-лучевая розетка симметрии (сложные самоорганизующиеся сети)"
     }
 
+    kernel = np.ones(3, dtype=int)
     for n in range(8):
         total_states = 3 ** n
         edges = 0 if n == 0 else 2 * n * (3 ** (n - 1))
@@ -42,9 +43,9 @@ def run_7d_scaling_audit():
         if n == 0:
             zero_states = 1
         else:
-            poly = np.array([1])
+            poly = np.ones(1, dtype=int)
             for _ in range(n):
-                poly = np.convolve(poly, [1, 1, 1])
+                poly = np.convolve(poly, kernel)
             zero_states = poly[n]
 
         eq_share = (zero_states / total_states) * 100.0
@@ -102,7 +103,7 @@ def generate_7d_petrie_rosette():
     )
 
     # Выделение центрального нулевого аттрактора (0,0,0,0,0,0,0)
-    ax.scatter([0], [0], color="gold", s=220, edgecolors="white", linewidth=1.5, zorder=5,
+    ax.scatter((0,), (0,), color="gold", s=220, edgecolors="white", linewidth=1.5, zorder=5,
                label="Центральный узел равновесия (0^7)")
 
     cbar = plt.colorbar(scatter, ax=ax, fraction=0.046, pad=0.04)
@@ -123,4 +124,4 @@ def generate_7d_petrie_rosette():
 if __name__ == "__main__":
     run_7d_scaling_audit()
     test_7d_system_stability()
-    generate_7d_petrie_rosette()
+    generate_7d_petrie_rosette() 

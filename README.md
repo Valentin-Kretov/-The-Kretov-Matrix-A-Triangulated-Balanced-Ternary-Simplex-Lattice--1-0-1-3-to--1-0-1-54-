@@ -1,3 +1,4 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24419887.svg)](https://doi.org)
 # The Kretov Matrix: A Triangulated Balanced Ternary Simplex Lattice ($\{-1, 0, +1\}^3 \to \{-1, 0, +1\}^{54}$) for Unifying Fundamental Physical Constants, Quantum Non-Locality, and Macroscopic Emergence
 
 **Author:** Valentin Aleksandrovich Kretov (Кретов Валентин Александрович)  

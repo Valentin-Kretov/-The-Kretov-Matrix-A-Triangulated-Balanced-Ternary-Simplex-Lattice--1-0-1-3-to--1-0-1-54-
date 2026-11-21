@@ -60,14 +60,17 @@ def build_interactive_matrix():
     ex, ey, ez = [], [], []
     for i in range(27):
         for j in range(i + 1, 27):
-            diff = [nodes[j][d] - nodes[i][d] for d in range(3)]
-            manhattan = sum(abs(v) for v in diff)
-            diag_tri = (diff == 0 and diff * diff == -1)
+            nx1, ny1, nz1 = nodes[i]
+            nx2, ny2, nz2 = nodes[j]
+            dx, dy, dz = nx2 - nx1, ny2 - ny1, nz2 - nz1
+            manhattan = abs(dx) + abs(dy) + abs(dz)
+            diag_tri = (dx == 0 and dy * dz == -1)
             if manhattan == 1 or diag_tri:
-                p1, p2 = pos[nodes[i]], pos[nodes[j]]
-                ex.extend([p1, p2, None])
-                ey.extend([p1, p2, None])
-                ez.extend([p1, p2, None])
+                x1, y1, z1 = pos[nodes[i]]
+                x2, y2, z2 = pos[nodes[j]]
+                ex.extend([x1, x2, None])
+                ey.extend([y1, y2, None])
+                ez.extend([z1, z2, None])
 
     fig = go.Figure()
     fig.add_trace(go.Scatter3d(
@@ -78,19 +81,21 @@ def build_interactive_matrix():
 
     colors = {-1: "#FF595E", 0: "#8AC926", 1: "#1982C4"}
     names = {-1: "Layer I: Dynamics (-1)", 0: "Layer II: Substance (0)", 1: "Layer III: Geometry (+1)"}
-    for x_val in [-1, 0, 1]:
-        pts = [n for n in nodes if n == x_val and n != (0, 0, 0)]
+    for x_val in (-1, 0, 1):
+        pts = [n for n in nodes if n[0] == x_val and n != (0, 0, 0)]
+        px_list = [pos[p][0] for p in pts]
+        py_list = [pos[p][1] for p in pts]
+        pz_list = [pos[p][2] for p in pts]
+        labels = [nodes_data[p][0].split("(")[-1].rstrip(")") for p in pts]
+        hovers = [f"<b>{nodes_data[p][0]}</b><br>Value: {nodes_data[p][1]}<br>Coord: {p}" for p in pts]
+
         fig.add_trace(go.Scatter3d(
-            x=[pos[p] for p in pts],
-            y=[pos[p] for p in pts],
-            z=[pos[p] for p in pts],
+            x=px_list, y=py_list, z=pz_list,
             mode="markers+text", name=names[x_val],
             marker=dict(size=8, color=colors[x_val], line=dict(width=1.5, color="white")),
-            text=[nodes_data[p].split("(")[-1].rstrip(")") for p in pts],
-            textposition="top center",
+            text=labels, textposition="top center",
             textfont=dict(size=9, color="rgba(255,255,255,0.9)"),
-            hovertext=[f"<b>{nodes_data[p]}</b><br>Value: {nodes_data[p]}<br>Coord: {p}" for p in pts],
-            hoverinfo="text"
+            hovertext=hovers, hoverinfo="text"
         ))
 
     cx, cy, cz = pos[(0, 0, 0)]
@@ -111,6 +116,12 @@ def build_interactive_matrix():
             camera=dict(eye=dict(x=0.0, y=-0.1, z=2.3))
         )
     )
+    fig.write_html("kretov_matrix_3d_interactive.html", include_plotlyjs="cdn")
+
+
+if __name__ == "__main__":
+    build_interactive_matrix()
+
     fig.write_html("kretov_matrix_3d_interactive.html", include_plotlyjs="cdn")
 
 

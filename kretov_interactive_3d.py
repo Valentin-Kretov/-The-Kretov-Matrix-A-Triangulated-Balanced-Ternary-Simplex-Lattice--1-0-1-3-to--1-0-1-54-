@@ -59,7 +59,7 @@ def build_interactive_matrix():
             nx2, ny2, nz2 = nodes[j]
             dx, dy, dz = nx2 - nx1, ny2 - ny1, nz2 - nz1
             manhattan = abs(dx) + abs(dy) + abs(dz)
-            if manhattan == 1 or diag_tri:
+            if manhattan == 1:
                 x1, y1, z1 = pos[nodes[i]]
                 x2, y2, z2 = pos[nodes[j]]
                 ex.extend([x1, x2, None])

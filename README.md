@@ -207,5 +207,3 @@ References
 4. NuFIT Global Analysis of Neutrino Oscillation Data ($\Delta m_{21}^2, \Delta m_{31}^2, \theta_{23}$).
 5. Peccei, R. D., & Quinn, H. R. (1977). CP Conservation in the Presence of Pseudoparticles. Physical Review Letters, 38(25), 1440.
 6. Collins, D., Gisin, N., Linden, N., Massar, S., & Popescu, S. (2002). Bell Inequalities for Arbitrarily High-Dimensional Systems. Physical Review Letters, 88(4), 040404.
-
-3. Нажмите зеленую кнопку **Commit changes...** в правом верхнем углу → **Commit changes**.

@@ -33,7 +33,7 @@ def build_interactive_matrix():
         ( 1,  1,  1): ("Reactor Angle (theta_13^PMNS)", "8.54 deg", "Layer III: Geometry"),
     }
     nodes = list(itertools.product([-1, 0, 1], repeat=3))
-        # Проекция в триангулированную симплекс-пирамиду (углы 60/120 градусов)
+    # Проекция в триангулированную симплекс-пирамиду (углы 60/120 градусов)
     def to_simplex(x, y, z):
         scale = 1.0 - 0.18 * x
         px = scale * (y + 0.5 * z)
@@ -98,12 +98,6 @@ def build_interactive_matrix():
             xaxis=dict(visible=False), yaxis=dict(visible=False), zaxis=dict(visible=False)
         )
     )
-    fig.write_html("kretov_matrix_3d_interactive.html", include_plotlyjs="cdn")
-
-
-if __name__ == "__main__":
-    build_interactive_matrix()
-
     fig.write_html("kretov_matrix_3d_interactive.html", include_plotlyjs="cdn")
 
 

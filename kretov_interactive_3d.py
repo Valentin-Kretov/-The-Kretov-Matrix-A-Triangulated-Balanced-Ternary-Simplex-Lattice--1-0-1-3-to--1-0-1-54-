@@ -34,38 +34,64 @@ def build_interactive_matrix():
     }
     nodes = list(itertools.product([-1, 0, 1], repeat=3))
     # Проекция в триангулированную симплекс-пирамиду (углы 60/120 градусов)
-    def to_simplex(x, y, z):
-        scale = 1.0 - 0.18 * x
-        px = scale * (y + 0.5 * z)
-        py = scale * (z * 0.8660254)
-        pz = x * 1.15
-        return (px, py, pz)
+    # Координаты 9 узлов в виде вложенного равностороннего треугольника
+    tri_2d = {
+        (-1, -1): ( 0.00,  1.15),   # Верхняя вершина треугольника
+        ( 1, -1): (-1.00, -0.58),   # Левая нижняя вершина
+        ( 1,  1): ( 1.00, -0.58),   # Правая нижняя вершина
+        ( 0, -1): (-0.50,  0.29),   # Середина левой стороны
+        ( 0,  0): ( 0.50,  0.29),   # Середина правой стороны
+        ( 1,  0): ( 0.00, -0.58),   # Середина нижней стороны
+        (-1,  0): (-0.28,  0.16),   # Внутренний левый узел
+        (-1,  1): ( 0.28,  0.16),   # Внутренний правый узел
+        ( 0,  1): ( 0.00, -0.15),   # Центр треугольного слоя
+    }
+
+    def to_pyramid(x, y, z):
+        # Слой I (-1) — широкое основание, Слой II (0) — середина, Слой III (+1) — вершина
+        scale = { -1: 1.35, 0: 0.95, 1: 0.58 }[x]
+        bx, by = tri_2d[(y, z)]
+        return (bx * scale, by * scale, x * 1.4)
 
     nodes = list(itertools.product([-1, 0, 1], repeat=3))
-    pos = {n: to_simplex(*n) for n in nodes}
+    pos = {n: to_pyramid(*n) for n in nodes}
 
+    # Строим 54 ребра: 18 треугольных ребер внутри каждого слоя + вертикальные связи
     ex, ey, ez = [], [], []
-    for i in range(27):
-        for j in range(i + 1, 27):
-            # Соединяем узлы внутри треугольных слоев и между слоями
-            diff = [nodes[j][d] - nodes[i][d] for d in range(3)]
-            manhattan = sum(abs(v) for v in diff)
-            diag_tri = (diff[0] == 0 and diff[1] * diff[2] == -1)
-            if manhattan == 1 or diag_tri:
-                p1, p2 = pos[nodes[i]], pos[nodes[j]]
-                ex.extend([p1[0], p2[0], None])
-                ey.extend([p1[1], p2[1], None])
-                ez.extend([p1[2], p2[2], None])
+    layer_edges = [
+        ((-1, -1), (0, -1)), ((0, -1), (1, -1)),   # Левая сторона
+        ((-1, -1), (0,  0)), ((0,  0), (1,  1)),   # Правая сторона
+        (( 1, -1), (1,  0)), ((1,  0), (1,  1)),   # Нижняя сторона
+        (( 0, -1), (0,  0)), ((0,  0), (1,  0)), ((1, 0), (0, -1)), # Срединный треугольник
+        ((-1, -1), (-1, 0)), ((-1, -1), (-1, 1)),  # Внутренние лучи к вершине
+        (( 1, -1), (-1, 0)), (( 1,  1), (-1, 1)),
+        ((-1,  0), (-1, 1)), ((-1,  0), ( 0, 1)), ((-1, 1), (0, 1)), ((1, 0), (0, 1)), ((0, 0), (0, 1))
+    ]
+
+    for x_val in [-1, 0, 1]:
+        for u, v in layer_edges:
+            p1, p2 = pos[(x_val, u[0], u[1])], pos[(x_val, v[0], v[1])]
+            ex.extend([p1[0], p2[0], None])
+            ey.extend([p1[1], p2[1], None])
+            ez.extend([p1[2], p2[2], None])
+
+    # Вертикальные связи между тремя треугольными слоями
+    for yz in tri_2d:
+        for x1, x2 in [(-1, 0), (0, 1)]:
+            p1, p2 = pos[(x1, yz[0], yz[1])], pos[(x2, yz[0], yz[1])]
+            ex.extend([p1[0], p2[0], None])
+            ey.extend([p1[1], p2[1], None])
+            ez.extend([p1[2], p2[2], None])
 
     fig = go.Figure()
     fig.add_trace(go.Scatter3d(
         x=ex, y=ey, z=ez, mode="lines",
-        line=dict(color="rgba(100, 200, 255, 0.40)", width=2.5),
-        hoverinfo="none", name="Triangulated Tensegrity Mesh"
+        line=dict(color="rgba(100, 200, 255, 0.45)", width=2.5),
+        hoverinfo="none", name="54 Tensegrity Edges"
     ))
 
     colors = {-1: "#FF595E", 0: "#8AC926", 1: "#1982C4"}
-    names = {-1: "Layer I: Dynamics", 0: "Layer II: Substance", 1: "Layer III: Geometry"}
+    names = {-1: "Layer I: Dynamics (Base)", 0: "Layer II: Substance (Core)", 1: "Layer III: Geometry (Apex)"}
     for x_val in [-1, 0, 1]:
         pts = [n for n in nodes if n[0] == x_val and n != (0, 0, 0)]
         fig.add_trace(go.Scatter3d(
@@ -76,7 +102,7 @@ def build_interactive_matrix():
             marker=dict(size=8, color=colors[x_val], line=dict(width=1.5, color="white")),
             text=[nodes_data[p][0].split("(")[-1].rstrip(")") for p in pts],
             textposition="top center",
-            textfont=dict(size=10, color="rgba(255,255,255,0.85)"),
+            textfont=dict(size=9, color="rgba(255,255,255,0.9)"),
             hovertext=[f"<b>{nodes_data[p][0]}</b><br>Value: {nodes_data[p][1]}<br>Coord: {p}" for p in pts],
             hoverinfo="text"
         ))
@@ -85,17 +111,18 @@ def build_interactive_matrix():
     fig.add_trace(go.Scatter3d(
         x=[cx], y=[cy], z=[cz], mode="markers+text", name="27th Node: Focal Hub (0,0,0)",
         marker=dict(size=14, color="#FFFFFF", symbol="diamond", line=dict(width=2, color="#FFCA3A")),
-        text=["θ_QCD = 0 (HUB)"], textposition="top center",
-        textfont=dict(size=12, color="#FFCA3A"),
+        text=["θ_QCD = 0"], textposition="bottom center",
+        textfont=dict(size=11, color="#FFCA3A"),
         hovertext=["<b>Central Focal Hub (0,0,0)</b><br>Strong CP = 0 / Observer Focus"],
         hoverinfo="text"
     ))
 
     fig.update_layout(
-        title="The Kretov Matrix: Triangulated Balanced Ternary Simplex Lattice",
+        title="The Kretov Matrix: Triangulated Balanced Ternary Simplex Pyramid",
         template="plotly_dark", margin=dict(l=0, r=0, b=0, t=40),
         scene=dict(
-            xaxis=dict(visible=False), yaxis=dict(visible=False), zaxis=dict(visible=False)
+            xaxis=dict(visible=False), yaxis=dict(visible=False), zaxis=dict(visible=False),
+            camera=dict(eye=dict(x=1.5, y=1.5, z=1.1))
         )
     )
     fig.write_html("kretov_matrix_3d_interactive.html", include_plotlyjs="cdn")

@@ -33,19 +33,35 @@ def build_interactive_matrix():
         ( 1,  1,  1): ("Reactor Angle (theta_13^PMNS)", "8.54 deg", "Layer III: Geometry"),
     }
     nodes = list(itertools.product([-1, 0, 1], repeat=3))
+        # Проекция в триангулированную симплекс-пирамиду (углы 60/120 градусов)
+    def to_simplex(x, y, z):
+        scale = 1.0 - 0.18 * x
+        px = scale * (y + 0.5 * z)
+        py = scale * (z * 0.8660254)
+        pz = x * 1.15
+        return (px, py, pz)
+
+    nodes = list(itertools.product([-1, 0, 1], repeat=3))
+    pos = {n: to_simplex(*n) for n in nodes}
+
     ex, ey, ez = [], [], []
     for i in range(27):
         for j in range(i + 1, 27):
-            if sum(abs(nodes[i][d] - nodes[j][d]) for d in range(3)) == 1:
-                ex.extend([nodes[i][0], nodes[j][0], None])
-                ey.extend([nodes[i][1], nodes[j][1], None])
-                ez.extend([nodes[i][2], nodes[j][2], None])
+            # Соединяем узлы внутри треугольных слоев и между слоями
+            diff = [nodes[j][d] - nodes[i][d] for d in range(3)]
+            manhattan = sum(abs(v) for v in diff)
+            diag_tri = (diff[0] == 0 and diff[1] * diff[2] == -1)
+            if manhattan == 1 or diag_tri:
+                p1, p2 = pos[nodes[i]], pos[nodes[j]]
+                ex.extend([p1[0], p2[0], None])
+                ey.extend([p1[1], p2[1], None])
+                ez.extend([p1[2], p2[2], None])
 
     fig = go.Figure()
     fig.add_trace(go.Scatter3d(
         x=ex, y=ey, z=ez, mode="lines",
-        line=dict(color="rgba(120, 180, 255, 0.35)", width=3),
-        hoverinfo="none", name="54 Tensegrity Edges"
+        line=dict(color="rgba(100, 200, 255, 0.40)", width=2.5),
+        hoverinfo="none", name="Triangulated Tensegrity Mesh"
     ))
 
     colors = {-1: "#FF595E", 0: "#8AC926", 1: "#1982C4"}
@@ -53,25 +69,41 @@ def build_interactive_matrix():
     for x_val in [-1, 0, 1]:
         pts = [n for n in nodes if n[0] == x_val and n != (0, 0, 0)]
         fig.add_trace(go.Scatter3d(
-            x=[p[0] for p in pts], y=[p[1] for p in pts], z=[p[2] for p in pts],
-            mode="markers", name=names[x_val],
-            marker=dict(size=9, color=colors[x_val], line=dict(width=1.5, color="white")),
-            text=[f"<b>{nodes_data[p][0]}</b><br>Value: {nodes_data[p][1]}<br>Node: {p}" for p in pts],
+            x=[pos[p][0] for p in pts],
+            y=[pos[p][1] for p in pts],
+            z=[pos[p][2] for p in pts],
+            mode="markers+text", name=names[x_val],
+            marker=dict(size=8, color=colors[x_val], line=dict(width=1.5, color="white")),
+            text=[nodes_data[p][0].split("(")[-1].rstrip(")") for p in pts],
+            textposition="top center",
+            textfont=dict(size=10, color="rgba(255,255,255,0.85)"),
+            hovertext=[f"<b>{nodes_data[p][0]}</b><br>Value: {nodes_data[p][1]}<br>Coord: {p}" for p in pts],
             hoverinfo="text"
         ))
 
+    cx, cy, cz = pos[(0, 0, 0)]
     fig.add_trace(go.Scatter3d(
-        x=[0], y=[0], z=[0], mode="markers", name="Central Hub (0,0,0)",
+        x=[cx], y=[cy], z=[cz], mode="markers+text", name="27th Node: Focal Hub (0,0,0)",
         marker=dict(size=14, color="#FFFFFF", symbol="diamond", line=dict(width=2, color="#FFCA3A")),
-        text=["<b>Central Focal Hub (0,0,0)</b><br>Zero-Point Attractor / Observer Focus"],
+        text=["θ_QCD = 0 (HUB)"], textposition="top center",
+        textfont=dict(size=12, color="#FFCA3A"),
+        hovertext=["<b>Central Focal Hub (0,0,0)</b><br>Strong CP = 0 / Observer Focus"],
         hoverinfo="text"
     ))
 
     fig.update_layout(
-        title="The Kretov Matrix: 27 Nodes & 54 Tensegrity Edges",
+        title="The Kretov Matrix: Triangulated Balanced Ternary Simplex Lattice",
         template="plotly_dark", margin=dict(l=0, r=0, b=0, t=40),
-        scene=dict(xaxis_title="X (Dynamics)", yaxis_title="Y (Substance)", zaxis_title="Z (Geometry)")
+        scene=dict(
+            xaxis=dict(visible=False), yaxis=dict(visible=False), zaxis=dict(visible=False)
+        )
     )
+    fig.write_html("kretov_matrix_3d_interactive.html", include_plotlyjs="cdn")
+
+
+if __name__ == "__main__":
+    build_interactive_matrix()
+
     fig.write_html("kretov_matrix_3d_interactive.html", include_plotlyjs="cdn")
 
 

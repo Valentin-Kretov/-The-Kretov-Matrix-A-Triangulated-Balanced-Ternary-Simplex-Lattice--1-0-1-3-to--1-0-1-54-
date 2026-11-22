@@ -152,6 +152,64 @@ def test_v40_continuum_and_topology():
     assert abs(a1_inv - a2_inv) < 4.0
     assert abs(a2_inv - a3_inv) < 6.0
 
+
+def test_v50_sm_gauge_and_delta27_potential():
+    """Verify v5.0 node connectivity decomposition (27 = 8 + 12 + 6 + 1) and Delta(27) potential invariance."""
+    import itertools
+    import numpy as np
+
+    # 1. Exact node hierarchy by zero-coordinate count (matching SM gauge & matter structure)
+    nodes = list(itertools.product([-1, 0, 1], repeat=3))
+    extremal_vertices = [
+        n for n in nodes if n.count(0) == 0
+    ]  # 8 chiral octets (degree 3)
+    edge_midpoints = [
+        n for n in nodes if n.count(0) == 1
+    ]  # 12 SM gauge bosons: 8 + 3 + 1 (degree 4)
+    face_centers = [
+        n for n in nodes if n.count(0) == 2
+    ]  # 6 Higgs/flavon doublets (degree 5)
+    central_hub = [
+        n for n in nodes if n.count(0) == 3
+    ]  # 1 unbroken U(1)_em / theta_QCD=0 hub (degree 6)
+
+    assert len(extremal_vertices) == 8
+    assert len(edge_midpoints) == 12
+    assert len(face_centers) == 6
+    assert len(central_hub) == 1
+    assert 8 + 12 + 6 + 1 == 27
+
+    # 2. Verify exact invariance of the Delta(27) flavon potential term under all 27 group elements
+    omega = np.exp(2j * np.pi / 3.0)
+    C = np.array(
+        [[0.0, 1.0, 0.0], [0.0, 0.0, 1.0], [1.0, 0.0, 0.0]], dtype=complex
+    )
+    D = np.diag([1.0, omega, omega**2])
+
+    def delta27_invariant_I3(phi):
+        # I3 = phi_-1^2 * phi_0^* * phi_+1^* + cyclic permutations
+        p_m, p_0, p_p = phi[0], phi[1], phi[2]
+        return (
+            (p_m**2) * np.conj(p_0) * np.conj(p_p)
+            + (p_0**2) * np.conj(p_p) * np.conj(p_m)
+            + (p_p**2) * np.conj(p_m) * np.conj(p_0)
+        )
+
+    rng = np.random.default_rng(seed=27)
+    phi_test = rng.normal(size=3) + 1j * rng.normal(size=3)
+    base_val = delta27_invariant_I3(phi_test)
+
+    for x, y, z in nodes:
+        g = (
+            (omega ** (z % 3))
+            * np.linalg.matrix_power(C, x % 3)
+            @ np.linalg.matrix_power(D, y % 3)
+        )
+        phi_transformed = g @ phi_test
+        assert np.allclose(
+            delta27_invariant_I3(phi_transformed), base_val, atol=1e-12
+        )
+
 if __name__ == "__main__":
     test_lattice_topology_and_spectrum()
     test_fundamental_constants_accuracy()

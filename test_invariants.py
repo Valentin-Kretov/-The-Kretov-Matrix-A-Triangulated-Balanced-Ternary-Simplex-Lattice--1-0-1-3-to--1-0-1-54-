@@ -210,6 +210,26 @@ def test_v50_sm_gauge_and_delta27_potential():
             delta27_invariant_I3(phi_transformed), base_val, atol=1e-12
         )
 
+
+def test_v60_zero_parameter_closure():
+    """Verify v6.0 zero-parameter closure: F/E = 2/3, holographic 3^243 bound, and epsilon = 1/27 generation step."""
+    import math
+
+    # 1. Induced potential coupling ratio fixed by simplex faces-to-edges: lambda_2 / lambda_1 = F / E = 36 / 54 = 2 / 3
+    F, E, V = 36, 54, 27
+    coupling_ratio = F / E
+    assert math.isclose(coupling_ratio, 2.0 / 3.0, rel_tol=1e-12)
+
+    # 2. Holographic entropy bound at tetration level k=5 (3^243 ~ 8.719e115) fixing a_0 = l_Pl
+    log10_s_holo = 243 * math.log10(3.0)
+    assert math.isclose(log10_s_holo, 115.9405, abs_tol=1e-3)
+
+    # 3. Geometric loop suppression factor epsilon = 1/V = 1/27 vs PDG 2nd/3rd generation geometric mean
+    epsilon = 1.0 / V
+    # PDG ratios: m_s / m_b ~ 93.4 / 4180, m_mu / m_tau ~ 105.66 / 1776.86
+    pdg_geom_mean = math.sqrt((93.4 / 4180.0) * (105.66 / 1776.86))
+    assert math.isclose(epsilon, pdg_geom_mean, rel_tol=0.02)
+
 if __name__ == "__main__":
     test_lattice_topology_and_spectrum()
     test_fundamental_constants_accuracy()

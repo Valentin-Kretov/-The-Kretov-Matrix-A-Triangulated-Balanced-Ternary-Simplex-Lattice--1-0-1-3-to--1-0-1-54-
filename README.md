@@ -9,8 +9,8 @@
 
 **Author:** Valentin Aleksandrovich Kretov (Кретов Валентин Александрович)  
 **Document Type:** Comprehensive Theoretical Preprint & Computational Specification  
-**Version:** 3.3 (Verified Delta(27) Group Embedding & Exact Combinatorial Edition) 
-**DOI:** `10.5281/zenodo.24419887`  
+**Version:** 3.5 (Verified Delta(27) Group Embedding & Exact Combinatorial Edition) 
+**DOI:** `10.5281/zenodo.24446441`  
 **License:** MIT (Code) / CC BY 4.0 (Text & Figures)  
 
 ---

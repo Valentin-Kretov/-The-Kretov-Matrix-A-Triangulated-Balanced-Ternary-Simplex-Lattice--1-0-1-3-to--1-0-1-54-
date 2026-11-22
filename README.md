@@ -214,6 +214,12 @@ To verify strict scale invariance across arbitrary nesting levels $\Omega_n = \{
 3. Exact Zero Strong CP Angle ($\theta_{\text{QCD}} \equiv 0$) and Axion Existence: Enforced by central hub minimization ($d_n < 10^{-33}\text{ e}\cdot\text{cm}$). Falsified by non-zero static nEDM detection (n2EDM) or full exclusion of the QCD axion (ADMX, IAXO, CASPEr).
 4. Strict Closure at 3 Fermion Generations: Bounded by $\Omega_3 = {-1, 0, +1}^3$; excludes a 4th sequential fermion generation or eV-scale sterile neutrino mixing as fundamental lattice nodes.
 
+
+5. **Leptonic CP-Violating Phase ($\delta_{\text{PMNS}} \approx 188.4^\circ$) and Jarlskog Invariant ($J_{\text{PMNS}} = -0.00487$):** In Layer I Circuit 3, the quark CP phase $\delta_{\text{CKM}} \approx 68.4^\circ$ at vertex $(-1)$ and the leptonic CP phase $\delta_{\text{PMNS}}$ at vertex $(+1)$ are separated across the central $\theta_{\text{QCD}} = 0$ hub by a native $120^\circ$ ($2\pi/3$) triadic rotation: $\delta_{\text{PMNS}} = \delta_{\text{CKM}} + 120^\circ = 188.4^\circ \pm 3.0^\circ$. Combining this with the lattice mixing angles ($\theta_{12}^{\text{PMNS}} = 33.29^\circ$, $\theta_{23}^{\text{PMNS}} = 45.00^\circ$, $\theta_{13}^{\text{PMNS}} = 8.54^\circ$) yields a parameter-free prediction for the leptonic Jarlskog invariant:
+   $$J_{\text{PMNS}} = \frac{1}{8}\sin(2\theta_{12})\sin(2\theta_{23})\sin(2\theta_{13})\cos(\theta_{13})\sin(\delta_{\text{PMNS}}) = -0.00487$$
+   Falsified if long-baseline oscillation experiments (DUNE, Hyper-Kamiokande) measure $\delta_{\text{PMNS}}$ outside $[180^\circ, 197^\circ]$ or $J_{\text{PMNS}} > 0$ at $>5\sigma$.
+6. **Exact Stratum Quantization of the Charged Lepton Koide Phase ($\theta_0^{(e)} = 2/9\text{ rad}$):** Within Layer II Circuit 3, the Brannen–Koide phase parameter $\theta_0$ in $\sqrt{m_k} = \mu_0(1 + \sqrt{2}\cos(\theta_0 + 2\pi k/3))$ is quantized strictly by the $3^2 = 9$ node cardinality of a single triangular stratum: $\theta_0^{(e)} = \frac{2}{9}\text{ rad} \approx 0.222222\text{ rad}$ (matching experimental lepton masses to within $8 \times 10^{-7}$).
+
 8. Methodological Scope & Limitations
 
 To maintain rigorous scientific transparency, we explicitly state the current boundaries of this framework:

@@ -96,7 +96,7 @@ def test_v35_analytical_noise_and_jarlskog():
     p1_exact = (1.0 + 2.0 * math.erf(0.5 / (0.35 * math.sqrt(2.0)))) / 3.0
     p3_exact = p1_exact**3
     assert math.isclose(p1_exact, 0.8979152, abs_tol=1e-6)
-    assert math.isclose(p3_exact, 0.7239473, abs_tol=1e-6)
+    assert math.isclose(p3_exact, 0.7239453, abs_tol=1e-6)
 
     # 2. Parameter-free Jarlskog invariant J_PMNS from 120-degree triadic shift
     t12 = math.radians(33.2900)

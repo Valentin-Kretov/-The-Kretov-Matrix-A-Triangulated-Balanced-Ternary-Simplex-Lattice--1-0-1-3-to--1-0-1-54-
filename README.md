@@ -151,7 +151,7 @@ To elevate the discrete lattice action $S[\Phi, U]$ from a phenomenological mode
 2. **Parameter-Free Topological Path-Integral Correction ($\chi = 9$):**
    Eliminating arbitrary degree-based approximations ($60^\circ$) in favor of pure simplicial topology, the Euler characteristic of $\Omega_3$ equals the stratum cardinality:
    $$\chi(\Omega_3) = V - E + F = 27 - 54 + 36 = 9$$
-   while the exact non-zero spectral determinant of the graph Laplacian is $\det'(-\Delta_{\Omega_3}) = \prod_{k \neq 0}(k\sqrt{2})^{m_k} = 589\,824 = 2^{15}\cdot 3^2$. Integrating the one-loop angular defect across $E = 54$ edges, $\chi = 9$, and the full $2\pi$ phase cycle yields a purely topological denominator $E \cdot \chi \cdot 2\pi = 972\pi$:
+   while the exact non-zero spectral determinant of the graph Laplacian is $\det'(-\Delta_{\Omega_3}) = \prod_{k \neq 0}(k\sqrt{2})^{m_k} = 589\,824 = 2^{16}\cdot 3^2 = 768^2$. Integrating the one-loop angular defect across $E = 54$ edges, $\chi = 9$, and the full $2\pi$ phase cycle yields a purely topological denominator $E \cdot \chi \cdot 2\pi = 972\pi$:
    $$\alpha^{-1}_{\text{top}} = (4\pi^3 + \pi^2 + \pi) - \frac{1}{972\pi} = 137.035976 \quad (99.99998\% \text{ PDG match without arbitrary units})$$
 
 3. **Discrete Renormalization Group (RG) Flow Across Scales ($3^n$):**

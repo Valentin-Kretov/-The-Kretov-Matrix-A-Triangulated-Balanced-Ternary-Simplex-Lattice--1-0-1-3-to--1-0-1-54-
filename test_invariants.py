@@ -131,7 +131,7 @@ def test_v40_continuum_and_topology():
         * ((1 * math.sqrt(2)) ** 12)
     )
     assert math.isclose(det_prime, 589824.0, rel_tol=1e-12)
-    assert int(round(det_prime)) == (2**15) * (3**2)
+    assert int(round(det_prime)) == (2**16) * (3**2)
 
     # 3. Parameter-free topological loop correction: E * chi * 2*pi = 972*pi
     alpha_inv_top = (4 * (math.pi**3) + (math.pi**2) + math.pi) - (

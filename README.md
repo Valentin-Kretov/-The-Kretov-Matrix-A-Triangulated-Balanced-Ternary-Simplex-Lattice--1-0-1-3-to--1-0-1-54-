@@ -160,6 +160,21 @@ To elevate the discrete lattice action $S[\Phi, U]$ from a phenomenological mode
    Starting from the electroweak scale $n = 3$ ($M_Z \approx 91.19\text{ GeV}$), the three gauge couplings converge toward Grand Unification at nesting level $n \approx 31$ ($\mu_{\text{GUT}} = M_Z \cdot 3^{28} \sim 2 \times 10^{15}\text{--}10^{16}\text{ GeV}$).
 
 
+### 4.4. Emergence of the Standard Model Gauge Group $SU(3)_C \times SU(2)_L \times U(1)_Y$ & Unified $\Delta(27)$ Yukawa Potential
+
+To complete the first-principles foundation, we derive the Standard Model gauge symmetry and the hierarchical mass spectrum of all $12$ fundamental fermions directly from the node-connectivity decomposition of $\Omega_3$ ($27 = 8 + 12 + 6 + 1$) and its $\Delta(27)$ group algebra:
+
+1. **Gauge Group $SU(3)_C \times SU(2)_L \times U(1)_Y$ via Lattice Trinification:**
+   Because $\Delta(27) \subset SU(3)$ and $\Omega_3 = \{-1, 0, +1\}^3$ is formed from orthogonal ternary axes, its continuous enveloping symmetry is the Glashow trinification group $G_{\text{lattice}} = SU(3)_C \times SU(3)_L \times SU(3)_R$, decomposing the $27$ nodes into three $9$-node strata:
+   $$\mathbf{27} = (\mathbf{3}, \bar{\mathbf{3}}, \mathbf{1})_X \oplus (\bar{\mathbf{3}}, \mathbf{1}, \mathbf{3})_Y \oplus (\mathbf{1}, \mathbf{3}, \bar{\mathbf{3}})_Z$$
+   Spontaneous symmetry breaking along the central hub reduces $SU(3)_L \times SU(3)_R \to SU(2)_L \times U(1)_Y$, yielding $G_{\text{SM}} = SU(3)_C \times SU(2)_L \times U(1)_Y$. The $12$ edge-midpoint nodes of $\Omega_3$ map to the $12$ gauge bosons ($8$ gluons, $3$ weak bosons, $1$ hypercharge boson), while face centers and extremal vertices form Higgs/flavon doublets and chiral fermion octets.
+
+2. **Unified $\Delta(27)$-Invariant Potential & 12-Fermion Mass Hierarchy:**
+   For a scalar flavon triplet $\Phi$ transforming under $\Delta(27)$, the invariant potential $V(\Phi)$ combines quadratic, quartic, and $\Delta(27)$-invariant cubic terms. Vacuum alignment along $\langle \Phi_Y \rangle$ preserves a residual $\mathbb{Z}_3$ subgroup, giving tree-level masses to the third generation ($m_{3,f} = y_f v_Y$) while generating lighter second- and first-generation masses radiatively via loop insertions of the cyclic shift generator $C$:
+   $$M_f = m_{3,f} \begin{pmatrix} \epsilon_f^2 & \delta_{12} & \delta_{13} \\ \delta_{12}^* & \epsilon_f & \delta_{23} \\ \delta_{13}^* & \delta_{23}^* & 1 \end{pmatrix}, \quad f \in \{u, d, e, \nu\}$$
+   This naturally explains the exponential intra-generational mass hierarchy ($m_1 \ll m_2 \ll m_3$) across all $12$ fermions.
+
+
 5. Multi-Regime Computational Stress-Tests ($N > 4.2 \times 10^6$ Trials)
 
 1. Discrete Combinatorial Convergence ($10^6$ trials in $\Omega_3$): Uniform stochastic sampling confirms rapid convergence of net topological charge toward zero ($\langle Q \rangle = -0.000895$), matching the theoretical $1\text{--}3\text{--}6\text{--}7\text{--}6\text{--}3\text{--}1$ distribution.

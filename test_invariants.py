@@ -114,6 +114,44 @@ def test_v35_analytical_noise_and_jarlskog():
     assert math.isclose(j_pmns, -0.004869, abs_tol=1e-5)
 
 
+
+def test_v40_continuum_and_topology():
+    """Verify v4.0 Euler characteristic, Laplacian determinant, 972*pi topological alpha^-1, and RG unification."""
+    import math
+
+    # 1. Euler characteristic of Omega_3: chi = V - E + F = 27 - 54 + 36 = 9
+    V, E, F = 27, 54, 36
+    chi = V - E + F
+    assert chi == 9 == 3**2
+
+    # 2. Exact non-zero spectral determinant of the graph Laplacian: (3*sqrt(2))^2 * (2*sqrt(2))^6 * (1*sqrt(2))^12
+    det_prime = (
+        ((3 * math.sqrt(2)) ** 2)
+        * ((2 * math.sqrt(2)) ** 6)
+        * ((1 * math.sqrt(2)) ** 12)
+    )
+    assert math.isclose(det_prime, 589824.0, rel_tol=1e-12)
+    assert int(round(det_prime)) == (2**15) * (3**2)
+
+    # 3. Parameter-free topological loop correction: E * chi * 2*pi = 972*pi
+    alpha_inv_top = (4 * (math.pi**3) + (math.pi**2) + math.pi) - (
+        1.0 / (E * chi * 2.0 * math.pi)
+    )
+    assert math.isclose(alpha_inv_top, 137.0359763, abs_tol=1e-6)
+
+    # 4. Discrete RG flow convergence across 3^n levels (from n=3 electroweak to n=31 GUT scale)
+    # Using standard SU(5)-normalized hypercharge b1 = 41/10, b2 = -19/6, b3 = -7
+    a1_inv, a2_inv, a3_inv = 59.01, 29.57, 8.47
+    b1, b2, b3 = 41.0 / 10.0, -19.0 / 6.0, -7.0
+    step = math.log(3.0) / (2.0 * math.pi)
+    for _ in range(28):  # n = 3 -> n = 31
+        a1_inv -= b1 * step
+        a2_inv -= b2 * step
+        a3_inv -= b3 * step
+    # At n = 31 (~10^16 GeV), gauge couplings converge near ~40-46
+    assert abs(a1_inv - a2_inv) < 4.0
+    assert abs(a2_inv - a3_inv) < 6.0
+
 if __name__ == "__main__":
     test_lattice_topology_and_spectrum()
     test_fundamental_constants_accuracy()

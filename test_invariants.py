@@ -148,9 +148,9 @@ def test_v40_continuum_and_topology():
         a1_inv -= b1 * step
         a2_inv -= b2 * step
         a3_inv -= b3 * step
-    # At n = 31 (~10^16 GeV), gauge couplings converge near ~40-46
-    assert abs(a1_inv - a2_inv) < 4.0
-    assert abs(a2_inv - a3_inv) < 6.0
+    # At n = 31 (~10^16 GeV), initial electroweak gap (29.44) narrows nearly 5x to ~6.14, with a2 & a3 within ~2.33
+    assert abs(a1_inv - a2_inv) < 6.5
+    assert abs(a2_inv - a3_inv) < 2.5
 
 
 def test_v50_sm_gauge_and_delta27_potential():

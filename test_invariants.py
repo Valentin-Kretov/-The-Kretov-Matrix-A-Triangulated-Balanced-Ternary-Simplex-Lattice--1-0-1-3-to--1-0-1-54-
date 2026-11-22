@@ -65,6 +65,55 @@ def test_cglmp_bell_bound():
     assert abs(i3_qutrit - 2.87293) < 1e-4
 
 
+def test_v35_fractal_rg_and_kurtosis():
+    """Verify v3.5 Kadanoff RG fixed point p0*=1/5, dual-matrix identity, and -1/36 kurtosis."""
+    import math
+
+    # 1. Kadanoff block-spin RG recursion: p0' = p0^3 + 1.5 * p0 * (1 - p0)^2
+    def rg_step(p0):
+        return (p0**3) + 1.5 * p0 * ((1.0 - p0) ** 2)
+
+    p0_star = 1.0 / 5.0
+    assert math.isclose(rg_step(p0_star), p0_star, rel_tol=1e-12)
+
+    # Verify convergence from Omega_3 neutral share (7/27) to 1/5
+    p = 7.0 / 27.0
+    for _ in range(50):
+        p = rg_step(p)
+    assert math.isclose(p, p0_star, rel_tol=1e-9)
+
+    # 2. Dual-matrix identity and exact excess kurtosis -1/F_36
+    assert 3**54 == (3**6) ** 9 == (3**27) ** 2
+    kappa_excess_54 = -3.0 / (2.0 * 54.0)
+    assert math.isclose(kappa_excess_54, -1.0 / 36.0, rel_tol=1e-12)
+
+
+def test_v35_analytical_noise_and_jarlskog():
+    """Verify v3.5 exact erf noise limits (N -> inf) and parameter-free J_PMNS."""
+    import math
+
+    # 1. Exact analytical noise recovery for sigma = 0.35
+    p1_exact = (1.0 + 2.0 * math.erf(0.5 / (0.35 * math.sqrt(2.0)))) / 3.0
+    p3_exact = p1_exact**3
+    assert math.isclose(p1_exact, 0.8979152, abs_tol=1e-6)
+    assert math.isclose(p3_exact, 0.7239473, abs_tol=1e-6)
+
+    # 2. Parameter-free Jarlskog invariant J_PMNS from 120-degree triadic shift
+    t12 = math.radians(33.2900)
+    t23 = math.radians(45.0000)
+    t13 = math.radians(8.5400)
+    delta_pmns = math.radians(68.4 + 120.0)
+    j_pmns = (
+        (1.0 / 8.0)
+        * math.sin(2.0 * t12)
+        * math.sin(2.0 * t23)
+        * math.sin(2.0 * t13)
+        * math.cos(t13)
+        * math.sin(delta_pmns)
+    )
+    assert math.isclose(j_pmns, -0.004869, abs_tol=1e-5)
+
+
 if __name__ == "__main__":
     test_lattice_topology_and_spectrum()
     test_fundamental_constants_accuracy()

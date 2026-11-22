@@ -197,7 +197,7 @@ To verify strict scale invariance across arbitrary nesting levels $\Omega_n = \{
    $$\kappa_{\text{excess}}(54) = -\frac{3}{2 \times 54} = -\frac{1}{36} = -\frac{1}{F_{36}}$$
    linking the macroscopic classical limit directly to the $F = 36$ triangular faces of $\Omega_3$.
 
-2. **Non-Trivial Renormalization Group (RG) Fixed Point ($p_0^* = 1/5$):**
+2. **Non-Trivial Renormalization Group (RG) Fixed Point ($p_0^{\ast} = 1/5$):**
    Under real-space Kadanoff block-spin coarse-graining—projecting triads $(x, y, z) \in \{-1, 0, +1\}^3$ onto a super-node via $\text{sgn}(x + y + z)$—the neutral-state probability $p_0$ evolves according to the exact recursion:
    $$p_0' = p_0^3 + \frac{3}{2} p_0 (1 - p_0)^2$$
    Solving $p_0' = p_0$ yields unstable trivial boundaries ($p_0 = 0, 1$) and a unique **stable attracting fixed point** ($f'(1/5) = 0.6 < 1$):
@@ -205,7 +205,7 @@ To verify strict scale invariance across arbitrary nesting levels $\Omega_n = \{
    As the system scales from $\Omega_3$ ($p_0 = 7/27 \approx 25.93\%$, split into $1$ static zero-point hub and $6$ dynamic zero states) toward macroscopic scales, it flows asymptotically toward an invariant $20\% : 80\%$ equilibrium-to-active attractor.
 
 3. **Dual-Matrix Identity ($3^{54} = (3^{27})^2$) & Closed-Form Noise Bounds ($N \to \infty$):**
-   The $54$-edge configuration space factorizes identically as $|\Omega_{54}| = 3^{54} = (3^{27})^2$, representing the tensor product of two complete $27$-node state spaces ($\Omega_{27} \otimes \Omega_{27}$, bipartite System–Environment duality). Furthermore, integrating the Gaussian error function for $\sigma = 0.35$ noise yields the exact asymptotic limits ($N \to \infty$): single-trit retention $P_1 = \frac{1 + 2\,\text{erf}(0.5 / (0.35\sqrt{2}))}{3} = 89.7915\%$ and $3$-trit block recovery $P_1^3 = 72.3947\%$.
+   The $54$-edge configuration space factorizes identically as $|\Omega_{54}| = 3^{54} = (3^{27})^2$, representing the tensor product of two complete $27$-node state spaces ($\Omega_{27} \otimes \Omega_{27}$, bipartite System–Environment duality). Furthermore, integrating the Gaussian error function for $\sigma = 0.35$ noise yields the exact asymptotic limits ($N \to \infty$): single-trit retention $P_1 = \frac{1 + 2\,\text{erf}(0.5 / (0.35\sqrt{2}))}{3} = 89.7915\%$ and $3$-trit block recovery $P_1^3 = 72.3945\%$.
 
 7. Falsifiable Predictions for Experimental Physics
 

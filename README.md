@@ -9,8 +9,8 @@
 
 **Author:** Valentin Aleksandrovich Kretov (Кретов Валентин Александрович)  
 **Document Type:** Comprehensive Theoretical Preprint & Computational Specification  
-**Version:** 4.0 (Continuum Limit, Topological Path-Integral & Discrete RG Flow Edition) 
-**DOI:** `10.5281/zenodo.24446441`  
+**Version:** 5.0 (Standard Model Gauge Emergence & Unified $\Delta(27)$ Yukawa Edition)
+**DOI:** `10.5281/zenodo.24419886`  
 **License:** MIT (Code) / CC BY 4.0 (Text & Figures)  
 
 ---

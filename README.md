@@ -9,7 +9,7 @@
 
 **Author:** Valentin Aleksandrovich Kretov (Кретов Валентин Александрович)  
 **Document Type:** Comprehensive Theoretical Preprint & Computational Specification  
-**Version:** 3.5 (Verified Delta(27) Group Embedding & Exact Combinatorial Edition) 
+**Version:** 4.0 (Continuum Limit, Topological Path-Integral & Discrete RG Flow Edition) 
 **DOI:** `10.5281/zenodo.24446441`  
 **License:** MIT (Code) / CC BY 4.0 (Text & Figures)  
 
@@ -82,7 +82,8 @@ The 27 nodes partition into **three 9-node nested triangular layers** ($3 \times
 | :--- | :--- | :--- | :--- |
 | **Circuit 1: Gauge Forces** | Weak Mixing Angle ($\sin^2\theta_W \approx 0.2312$) | Fine-Structure Constant ($\alpha \approx 1/137.036$) | Strong Coupling ($\alpha_s \approx 0.1180$) |
 | **Circuit 2: Vacuum & Mass Scale** | Higgs VEV ($v \approx 246.22\text{ GeV}$) | Higgs Boson Mass ($m_H \approx 125.10\text{ GeV}$) | Cosmological Constant ($\Lambda \approx 10^{-122} M_{\text{Pl}}^4$) |
-| **Circuit 3: CP-Symmetry & Core** | Quark CP Phase ($\delta_{\text{CKM}} \approx 68^\circ$) | **27th Constant: Strong CP ($\theta_{\text{QCD}} = 0$)** | Lepton CP Phase ($\delta_{\text{PMNS}} \approx 195^\circ$) |
+| **Circuit 3: CP-Symmetry & Core** | Quark CP Phase ($\delta_{\text{CKM}} \approx 68.4^\circ$) | Baryon Asymmetry ($\eta_B \approx 6.14 \times 10^{-10}$) | Lepton CP Phase ($\delta_{\text{PMNS}} \approx 188.4^\circ$) |
+
 
 * **Physical Rationale:** In Circuit 1, electromagnetism ($\alpha$) occupies $(0)$ as the long-range mediator balancing weak decay $(-1)$ and strong nuclear binding $(+1)$. In Circuit 2, the $10^{122}$ hierarchy gap between the electroweak vacuum $(-1)$ and cosmic acceleration $(+1)$ is mediated by the Higgs mass $(0)$. In Circuit 3, the matter-antimatter CP asymmetries in quarks $(-1)$ and leptons $(+1)$ are locked by the central focal node $(0,0,0)$: **$\theta_{\text{QCD}} = 0$**.
 

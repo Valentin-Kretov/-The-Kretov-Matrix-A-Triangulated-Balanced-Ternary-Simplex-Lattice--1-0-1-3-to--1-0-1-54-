@@ -233,7 +233,7 @@ To maintain rigorous scientific transparency, we explicitly state the current bo
 2. Path-Integral Quantization of $S[\Phi, U]$: Derive the spherical triangular correction factors in Section 4.2 directly from loop corrections on the 36 triangular faces of $\Omega_3$.
 3. Analytical Proof of Spectral Ratio Limits ($\pi/2$ and $1+\sqrt{2}$): Using Random Matrix Theory (RMT), derive closed-form analytical PDFs for symmetric $3 \times 3$ and $9 \times 9$ ternary matrices.
 4. Renormalization Group (RG) Flow Along Tensegrity Edges: Determine the unification energy scale $\mu^*$ where the balanced ternary expansions of $\alpha(\mu)$, $\alpha_s(\mu)$, and $\sin^2\theta_W(\mu)$ achieve simultaneous phase alignment.
-5. Ternary Algebraic Invariants for CKM & PMNS Matrices: Search for closed-form base-3 invariants linking the Jarlskog invariants $J_{\text{CKM}}$ and $J_{\text{PMNS}}$, analogous to $K_e \equiv \mathbf{+. -}$.
+5. [PARTIALLY RESOLVED IN v3.5]  \(J_{\text{PMNS}} = -0.00487\) Ternary Algebraic Invariants for CKM & PMNS Matrices: Search for closed-form base-3 invariants linking the Jarlskog invariants $J_{\text{CKM}}$ and $J_{\text{PMNS}}$, analogous to $K_e \equiv \mathbf{+. -}$.
 6. Holographic Coarse-Graining Operator ($\Omega_{54} \to \mathcal{M}^{3,1}$): Formulate the renormalization operator mapping $\Omega_{54}$ ($3^{54} \approx 5.815 \times 10^{25}$) onto a smooth $(3+1)$-dimensional Lorentzian spacetime manifold, deriving Einstein's field equations from the thermodynamic state of the 54-dimensional network.
 
 10. Repository Contents & Reproducibility

@@ -266,6 +266,6 @@ def test_v61_central_dipole_equilibrium():
 
     # 4. Космологическая постоянная Lambda занимает полярную вершину (r^2 = 3)
     lambda_idx = res["names"].index("Lambda_dimless")
-    matches = np.where(res["free_perm"] == lambda_idx)
-    lambda_node = res["nodes"][int(matches)]
+    node_pos = int(np.argwhere(res["free_perm"] == lambda_idx).item())
+    lambda_node = res["nodes"].take(node_pos, axis=0)
     assert int(round(np.sum(lambda_node ** 2))) == 3

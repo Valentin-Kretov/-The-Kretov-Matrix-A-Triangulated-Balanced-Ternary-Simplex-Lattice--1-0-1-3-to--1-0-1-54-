@@ -2,7 +2,7 @@ import numpy as np
 
 
 def get_26_dimensionless_constants():
-    """
+    r"""
     Формирование строго безразмерного базиса из 26 фундаментальных констант
     Стандартной модели + LambdaCDM (M_Pl = 1.22089e19 ГэВ, v = 246.22 ГэВ).
     """
@@ -22,7 +22,7 @@ def get_26_dimensionless_constants():
         "lambda_H": (m_H ** 2) / (2.0 * v ** 2),
         "Lambda_dimless": 2.88e-122,
         "delta_CKM": np.deg2rad(68.4),
-        "eta_B": 6.14e-10,
+        "theta23_PMNS": np.deg2rad(45.00),
         "delta_PMNS": np.deg2rad(188.4),
 
         # Слой II: Массы заряженных фермионов — юкавские константы (9)
@@ -46,10 +46,6 @@ def get_26_dimensionless_constants():
         "theta12_PMNS": np.deg2rad(33.41),
         "theta13_PMNS": np.deg2rad(8.54),
     }
-    # Примечание: theta23_PMNS = 45 deg = pi/4 (0.785398 рад) замещает eta_B в 26-параметрическом
-    # базисе СМ+LambdaCDM. Для полного соответствия 26 параметрам СМ + Lambda используем точный список:
-    constants.pop("eta_B")
-    constants["theta23_PMNS"] = np.deg2rad(45.00)
 
     assert len(constants) == 26, f"Ожидалось 26 констант, получено {len(constants)}"
     assert all(val > 0 for val in constants.values()), "Все константы должны быть строго > 0"
@@ -57,7 +53,7 @@ def get_26_dimensionless_constants():
 
 
 def generate_lattice_nodes():
-    """
+    r"""
     Генерация 26 внешних узлов {-1, 0, +1}^3 \ {(0,0,0)}
     и проверка наличия 13 точных антиподальных пар.
     """
@@ -73,8 +69,9 @@ def generate_lattice_nodes():
     node_set = set(nodes)
     pairs = []
     visited = set()
-    for v in nodes:
-        anti_v = (-v, -v, -v)
+    for x, y, z in nodes:
+        v = (x, y, z)
+        anti_v = (-x, -y, -z)
         assert anti_v in node_set, f"Отсутствует антипод для узла {v}"
         if v not in visited:
             pairs.append((v, anti_v))
@@ -86,13 +83,13 @@ def generate_lattice_nodes():
 
 
 def compute_pairwise_compensation(constants):
-    """
+    r"""
     Вариант 1: Аналитический поиск глобального минимума попарной компенсации
     w_a + w_b -> const, где w_i = |ln(X_i)|.
     """
-    items = sorted([(k, abs(np.log(v))) for k, v in constants.items()], key=lambda x: x)
-    weights = np.array([x for x in items])
-    target = 2.0 * np.mean(weights)
+    items = sorted([(k, float(abs(np.log(v)))) for k, v in constants.items()], key=lambda pair: pair[1])
+    weights = np.array([w for _, w in items])
+    target = float(2.0 * np.mean(weights))
 
     pairs_out = []
     sums = []
@@ -103,28 +100,27 @@ def compute_pairwise_compensation(constants):
         sums.append(s)
         pairs_out.append((na, nb, wa, wb, s))
 
-    sums = np.array(sums)
-    cv = float(np.std(sums) / np.mean(sums))
-    return pairs_out, float(target), cv
+    sums_arr = np.array(sums)
+    cv = float(np.std(sums_arr) / np.mean(sums_arr))
+    return pairs_out, target, cv
 
 
 def search_3d_equilibrium(constants, nodes, layered_constraint=False, n_restarts=8, steps=60_000):
-    """
+    r"""
     Вариант 2: Поиск глобального 3D-равновесия (нулевой дипольный момент в (0,0,0)
     и изотропный тензор инерции).
-    Если layered_constraint=True, сохраняется группировка по 3 слоям (X, Y, Z).
     """
     names = list(constants.keys())
-    weights = np.array([abs(np.log(constants[k])) for k in names])
+    weights = np.array([float(abs(np.log(constants[k]))) for k in names])
     total_w = float(np.sum(weights))
 
-    # Разбиение индексов узлов по слоям X = -1, 0, +1 (9 + 8 + 9 = 26 узлов)
+    nx, ny, nz = nodes[:, 0], nodes[:, 1], nodes[:, 2]
+
     layer_node_groups = [
-        np.where(nodes[:, 0] == -1)[0],
-        np.where(nodes[:, 0] == 0)[0],
-        np.where(nodes[:, 0] == 1)[0],
+        np.where(nx == -1)[0],
+        np.where(nx == 0)[0],
+        np.where(nx == 1)[0],
     ]
-    # Разбиение констант на 3 группы (9 Взаимодействия/CP, 8 Углы/Нейтрино, 9 Фермионы)
     layer_const_groups = [
         np.arange(0, 9),
         np.arange(18, 26),
@@ -136,12 +132,12 @@ def search_3d_equilibrium(constants, nodes, layered_constraint=False, n_restarts
         dipole = np.sum(w[:, None] * nodes, axis=0)
         dip_err = float(np.linalg.norm(dipole) / total_w)
 
-        I_xx = np.sum(w * (nodes[:, 1] ** 2 + nodes[:, 2] ** 2))
-        I_yy = np.sum(w * (nodes[:, 0] ** 2 + nodes[:, 2] ** 2))
-        I_zz = np.sum(w * (nodes[:, 0] ** 2 + nodes[:, 1] ** 2))
-        I_xy = -np.sum(w * nodes[:, 0] * nodes[:, 1])
-        I_xz = -np.sum(w * nodes[:, 0] * nodes[:, 2])
-        I_yz = -np.sum(w * nodes[:, 1] * nodes[:, 2])
+        I_xx = np.sum(w * (ny ** 2 + nz ** 2))
+        I_yy = np.sum(w * (nx ** 2 + nz ** 2))
+        I_zz = np.sum(w * (nx ** 2 + ny ** 2))
+        I_xy = -np.sum(w * nx * ny)
+        I_xz = -np.sum(w * nx * nz)
+        I_yz = -np.sum(w * ny * nz)
 
         diag_mean = (I_xx + I_yy + I_zz) / 3.0
         aniso = float((np.std([I_xx, I_yy, I_zz]) + abs(I_xy) + abs(I_xz) + abs(I_yz)) / diag_mean)
@@ -188,7 +184,7 @@ def search_3d_equilibrium(constants, nodes, layered_constraint=False, n_restarts
 
 
 def compute_pvalue(weights, nodes, target_dip_err, n_samples=3000):
-    """
+    r"""
     Оценка статистической значимости равновесия против случайных перестановок.
     """
     rng = np.random.default_rng(777)
@@ -204,7 +200,7 @@ def compute_pvalue(weights, nodes, target_dip_err, n_samples=3000):
 
 def run_full_audit():
     constants = get_26_dimensionless_constants()
-    nodes, _ = generate_lattice_nodes()
+    nodes, pairs = generate_lattice_nodes()
 
     pairs_out, target_s, cv_1 = compute_pairwise_compensation(constants)
     names, weights, perm_free, dip_free, aniso_free, vec_free = search_3d_equilibrium(
@@ -237,19 +233,20 @@ def run_full_audit():
 if __name__ == "__main__":
     res = run_full_audit()
     print("=== АУДИТ ЦЕНТРАЛЬНОГО РАВНОВЕСИЯ МАТРИЦЫ КРЕТОВА ===\n")
-    print(f"[Вариант 1] Попарная компенсация |ln(X_a)| + |ln(X_b)|:")
+    print("[Вариант 1] Попарная компенсация |ln(X_a)| + |ln(X_b)|:")
     print(f"  Средняя сумма = {res['pairwise_target']:.3f}, отн. разброс = {res['pairwise_cv']*100:.2f}%\n")
 
-    print(f"[Вариант 2A] Свободное 3D-равновесие (без привязки к слоям):")
+    print("[Вариант 2A] Свободное 3D-равновесие (без привязки к слоям):")
     print(f"  Остаточный диполь = {res['free_dip_err']:.6e} ({res['free_dip_err']*100:.5f}%)")
     print(f"  Анизотропия инерции = {res['free_aniso']:.6e}")
     print(f"  p-value против шума = {res['free_pvalue']:.5f}\n")
 
-    print(f"[Вариант 2B] Слоистое 3D-равновесие (сохранение слоев X, Y, Z):")
+    print("[Вариант 2B] Слоистое 3D-равновесие (сохранение слоев X, Y, Z):")
     print(f"  Остаточный диполь = {res['layered_dip_err']:.6e} ({res['layered_dip_err']*100:.5f}%)")
     print(f"  Анизотропия инерции = {res['layered_aniso']:.6e}\n")
 
     print("Карта узлов (Свободное 3D-равновесие):")
     for node, idx in zip(res["nodes"], res["free_perm"]):
-        c = f"({int(node):+d},{int(node):+d},{int(node):+d})"
+        x, y, z = int(node[0]), int(node[1]), int(node[2])
+        c = f"({x:+d},{y:+d},{z:+d})"
         print(f"  {c} -> {res['names'][idx]:<15} | |ln(X)| = {res['weights'][idx]:7.3f}")

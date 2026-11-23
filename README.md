@@ -184,14 +184,15 @@ To complete the first-principles foundation, we derive the Standard Model gauge 
 
 ### 4.6. Central Dipole & Tensor Equilibrium Around $\theta_{\text{QCD}} = 0$
 
-To eliminate combinatorial arbitrariness across the $26! \approx 4.03 \times 10^{26}$ possible assignments of the $26$ dimensionless Standard Model and $\Lambda$CDM parameters onto the $26$ outer nodes of $\Omega_3 \setminus \{(0,0,0)\}$, we impose a variational **Central Equilibrium Principle** in logarithmic information space ($w_i = |\ln X_i|$):
+Для устранения комбинаторной произвольности при назначении $26$ параметров Стандартной модели и $\Lambda$CDM на узлы $\Omega_3$ применяется вариационный **Принцип центрального равновесия** в логарифмическом пространстве информации ($w_i = |\ln X_i|$):
 
 $$\vec{D}_{\Omega_3} = \sum_{i=1}^{26} w_i \vec{r}_i \to \vec{0}, \qquad I_{xx} = I_{yy} = I_{zz}, \quad I_{xy} = I_{xz} = I_{yz} \to 0$$
 
-Exhaustive combinatorial optimization (`kretov_equilibrium_audit.py`) across both **13 antipodal dipole pairs** $(\vec{v}_k, -\vec{v}_k)$ and **global 3D tensor balancing** reveals three structural laws:
-1. **Cosmological–Neutrino Counterweight:** Placing the cosmological constant $\tilde{\Lambda} \sim 10^{-122}$ ($w_\Lambda \approx 280.6$) at an extremal polar vertex $(\pm 1, \pm 1, \pm 1)$ is dynamically counterbalanced across the central hub by the lightest fermion sector ($y_{\nu_1}, y_{\nu_2}, y_{\nu_3}, y_e, y_u$) and the electroweak hierarchy ($v/M_{\text{Pl}}$), linking neutrino mass scale directly to dark energy density.
-2. **Equatorial Localization of Couplings & Mixing:** Low-weight parameters ($w_i \in [0.01, 5.8]$)—gauge couplings ($\alpha, \sin^2\theta_W, \alpha_s$), CKM/PMNS mixing angles, and the top Yukawa anchor ($y_t \approx 1$)—naturally migrate to the equatorial face centers ($r = 1$), acting as low-inertia phase ripples around $(0,0,0)$.
-3. **Dynamical Locking of $\theta_{\text{QCD}} = 0$:** In the unconstrained 3D equilibrium state, the residual dipole imbalance vanishes to $< 10^{-4}$ ($p < 0.01$ against random permutations), demonstrating that the Strong CP angle $\theta_{\text{QCD}} = 0$ is not an ad-hoc assignment, but the unique mechanical and informational center of mass of the parameter manifold.
+Комбинаторная оптимизация (`kretov_equilibrium_audit.py`) по антиподным парам и глобальному тензорному балансу выделяет три структурных закона:
+1. **Космологическо-нейтринный противовес:** Параметр $\tilde{\Lambda}$ балансируется легкими фермионами и электрослабой иерархией с остаточной силой $\approx 21.15\%$ (близко к фикс-пункту $p_0^* = 1/5$).
+2. **Квантовое замыкание СМ:** Без учета $\tilde{\Lambda}$ остальные $25$ параметров замыкаются в нулевое дипольное равновесие ($< 0.1\%$) строго при $\theta_{\text{QCD}} = 0$.
+3. **Экваториальная локализация:** Параметры с малым весом (калибровочные константы, углы смешивания CKM/PMNS и $y_t$) располагаются на ортогональных центрах граней ($r = 1$).
+
 
 
 5. Multi-Regime Computational Stress-Tests ($N > 4.2 \times 10^6$ Trials)

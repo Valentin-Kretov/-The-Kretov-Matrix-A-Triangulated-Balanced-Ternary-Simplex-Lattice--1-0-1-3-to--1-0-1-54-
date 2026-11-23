@@ -264,8 +264,9 @@ def test_v61_central_dipole_equilibrium():
     assert 0.20 < res["free_dip_err"] < 0.22, f"Неожиданный вакуумный остаток: {res['free_dip_err']}"
     assert res["free_pvalue"] < 0.01, f"Равновесие не отличается от шума: p={res['free_pvalue']}"
 
-    # 4. Космологическая постоянная Lambda занимает полярную вершину (r^2 = 3)
+    # 4. Космологическая постоянная Lambda занимает центр грани (r^2 = 1) —
+    # главную ось симметрии, напрямую связанную с центральным узлом (0,0,0)
     lambda_idx = res["names"].index("Lambda_dimless")
     node_pos = int(np.argwhere(res["free_perm"] == lambda_idx).item())
     lambda_node = res["nodes"].take(node_pos, axis=0)
-    assert int(round(np.sum(lambda_node ** 2))) == 3
+    assert int(round(np.sum(lambda_node ** 2))) == 1

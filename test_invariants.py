@@ -270,3 +270,34 @@ def test_v61_central_dipole_equilibrium():
     node_pos = int(np.argwhere(res["free_perm"] == lambda_idx).item())
     lambda_node = res["nodes"].take(node_pos, axis=0)
     assert int(round(np.sum(lambda_node ** 2))) == 1
+
+
+def test_v62_rmt_spectral_theorem():
+    """
+    Проверка аналитического разложения спектра симметричных троичных матриц 3x3
+    (3^6 = 729) и перехода к закону полукруга Вигнера при N = 9, 27.
+    """
+    from kretov_rmt_analytical import run_rmt_proof
+
+    res = run_rmt_proof()
+    ex = res["exact_3x3"]
+    wig = res["wigner"]
+
+    # 1. Точное разложение пространства 3^6 = 729 и пирамида рангов
+    assert ex["total"] == 729
+    assert ex["non_degenerate"] == 516
+    assert ex["degenerate"] == 213  # 71 / 243 = 71 / 3^5
+    assert ex["rank_counts"] == {0: 1, 1: 26, 2: 186, 3: 516}
+    assert ex["poly_classes"] == 35
+
+    # 2. Полная 48-элементная орбита группы O_h с точным серебряным сечением
+    assert ex["silver_orbit_count"] == 48
+
+    # 3. Точность приближения к pi/2 и серебряному сечению 1 + sqrt(2) > 99.8%
+    assert ex["pi_half_accuracy"] > 0.998
+    assert ex["silver_accuracy"] > 0.998
+
+    # 4. Масштабирование Вигнера (GOE) при N = 9 и N = 27: подавление нулевых мод
+    assert wig.get(9).get("edge_ratio") > 0.80
+    assert wig.get(27).get("edge_ratio") > 0.90
+    assert wig.get(27).get("zero_mode_fraction") < 0.01

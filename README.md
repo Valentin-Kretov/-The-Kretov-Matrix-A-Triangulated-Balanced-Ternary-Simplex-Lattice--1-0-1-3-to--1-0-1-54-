@@ -9,7 +9,7 @@
 
 **Author:** Valentin Aleksandrovich Kretov (Кретов Валентин Александрович)  
 **Document Type:** Comprehensive Theoretical Preprint & Computational Specification  
-**Version:** 6.0 (Complete Zero-Parameter Closure & Coleman–Weinberg Edition)
+**Version:** 6.1 (Central Dipole Equilibrium & Cosmological Counterweight Edition)
 **DOI:** `10.5281/zenodo.24419886`  
 **License:** MIT (Code) / CC BY 4.0 (Text & Figures)  
 

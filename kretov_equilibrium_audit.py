@@ -254,5 +254,5 @@ if __name__ == "__main__":
     print(f"  Остаточный квантовый диполь:              {res['sm25_dip_err']*100:.6f}% (p={res['sm25_pvalue']:.5f})\n")
     print("Карта 26 узлов:")
     for node, idx in zip(res["nodes"], res["free_perm"]):
-        x, y, z = int(node), int(node), int(node)
+        x, y, z = map(int, node)
         print(f"  ({x:+d},{y:+d},{z:+d}) -> {res['names'][idx]:<15} | |ln(X)| = {res['weights'][idx]:7.3f}")

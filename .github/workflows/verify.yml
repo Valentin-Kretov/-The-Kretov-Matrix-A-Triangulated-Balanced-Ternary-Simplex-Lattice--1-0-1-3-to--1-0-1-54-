@@ -37,6 +37,9 @@ jobs:
       - name: Run Mathematical Invariants Verification
         run: pytest -v test_invariants.py
 
+      - name: Run Central Equilibrium Audit (26-Node Map)
+        run: python kretov_equilibrium_audit.py
+
       - name: Generate Interactive 3D Model
         run: |
           mkdir -p public

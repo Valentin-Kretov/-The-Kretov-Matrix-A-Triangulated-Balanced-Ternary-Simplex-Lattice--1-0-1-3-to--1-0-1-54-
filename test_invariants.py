@@ -316,21 +316,24 @@ def test_v63_quantum_resonator():
     rb = res.get("rabi")
     ns = res.get("noise")
 
-    # 1. Унитарность и период де Бройля T = pi * sqrt(2)
+    # 1. Унитарность и спинорный период T = pi * sqrt(2)
     assert np.isclose(br.get("norm_preserved"), 1.0, atol=1e-12)
     assert np.isclose(br.get("period"), np.pi * np.sqrt(2.0), atol=1e-12)
 
-    # 2. Идеальный квантовый возврат (100%) в (0,0,0) и выброс на 8 вершин на T/2
+    # 2. Выброс на 8 вершин на t = T/4, спинорная инверсия (-1) на T/2 и возврат (+1) на T
+    assert br.get("quarter_corners_prob") > 0.999999
+    assert br.get("quarter_center_prob") < 1e-12
+    assert br.get("half_center_prob") > 0.999999
+    assert np.isclose(br.get("half_phase"), -1.0, atol=1e-12)
     assert br.get("full_revival_prob") > 0.999999
-    assert br.get("half_corners_prob") > 0.999999
-    assert br.get("half_center_prob") < 1e-12
+    assert np.isclose(br.get("full_phase"), 1.0, atol=1e-12)
 
-    # 3. Симметричное дыхание оболочек на t = T/4: 1/8, 3/8, 3/8, 1/8
-    c_q, f_q, e_q, v_q = br.get("quarter_shells")
-    assert np.isclose(c_q, 0.125, atol=1e-12)
-    assert np.isclose(f_q, 0.375, atol=1e-12)
-    assert np.isclose(e_q, 0.375, atol=1e-12)
-    assert np.isclose(v_q, 0.125, atol=1e-12)
+    # 3. Симметричное дыхание оболочек на t = T/8: 1/8, 3/8, 3/8, 1/8
+    c_e, f_e, e_e, v_e = br.get("eighth_shells")
+    assert np.isclose(c_e, 0.125, atol=1e-12)
+    assert np.isclose(f_e, 0.375, atol=1e-12)
+    assert np.isclose(e_e, 0.375, atol=1e-12)
+    assert np.isclose(v_e, 0.125, atol=1e-12)
 
     # 4. Резонансная туннельная передача импульса во вторую ячейку Omega_3 (> 95%)
     assert rb.get("max_total_b_prob") > 0.95

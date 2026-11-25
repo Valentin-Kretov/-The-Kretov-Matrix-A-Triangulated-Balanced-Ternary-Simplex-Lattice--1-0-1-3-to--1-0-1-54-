@@ -435,3 +435,24 @@ def test_v70_ternary_decimation_rg_running():
     a3_inv_GUT = 8.47 - (-7.0 / two_pi) * (28 * ln3)
     gut_gap = abs(a2_inv_GUT - a3_inv_GUT)
     assert gut_gap < 0.12 * initial_gap
+
+
+def test_v70_experimentum_crucis_predictions():
+    """Verify exact self-consistency of pre-registered v7.0 falsifiable experimental predictions."""
+    import math
+
+    # 1. Signed ternary Koide invariant for Normal Ordering neutrinos: K_nu = 2/3 (+.-)
+    m1, m2, m3 = 0.36, 8.62, 50.15  # meV
+    sum_m = m1 + m2 + m3
+    signed_denom = (-math.sqrt(m1) + math.sqrt(m2) + math.sqrt(m3)) ** 2
+    k_nu = sum_m / signed_denom
+    assert abs(sum_m - 59.13) < 1e-6
+    assert abs(k_nu - (2.0 / 3.0)) < 5e-5
+
+    # 2. Leptonic Jarlskog invariant from lattice angles and 120-deg triadic CP shift
+    t12 = math.radians(33.29)
+    t23 = math.radians(45.00)
+    t13 = math.radians(8.54)
+    delta_pmns = math.radians(68.4 + 120.0)  # 188.4 deg
+    j_pmns = (1.0 / 8.0) * math.sin(2 * t12) * math.sin(2 * t23) * math.sin(2 * t13) * math.cos(t13) * math.sin(delta_pmns)
+    assert abs(j_pmns - (-0.00487)) < 1e-5

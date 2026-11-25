@@ -341,3 +341,18 @@ def test_v63_quantum_resonator():
 
     # 5. Защита кванта от флуктуаций вакуума благодаря щели Delta E = sqrt(2)
     assert ns.get("mean_revival_fidelity") > 0.50
+
+
+def test_v70_cw_cell_complex_invariants():
+    import itertools
+    nodes = list(itertools.product([-1, 0, 1], repeat=3))
+    assert len(nodes) == 27
+    edges = [
+        (u, v) for i, u in enumerate(nodes) for j, v in enumerate(nodes)
+        if i < j and sum(abs(a - b) for a, b in zip(u, v)) == 1
+    ]
+    assert len(edges) == 54
+    F, C = 3 * (2 * 2 * 3), 2 * 2 * 2
+    assert F == 36 and C == 8
+    assert len(nodes) - len(edges) + F == 9
+    assert len(nodes) - len(edges) + F - C == 1

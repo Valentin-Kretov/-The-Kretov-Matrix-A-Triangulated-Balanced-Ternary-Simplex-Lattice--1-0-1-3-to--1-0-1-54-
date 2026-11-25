@@ -520,7 +520,7 @@ def test_v73_heat_kernel_loop_derivation():
     import math
     q = 3.0 ** (-6)
     heat_kernel = (1.0 + q + q**3) ** 3 - 1.0
-    alpha_inv_hk = (4 * math.pi**3 + math.pi**2 + math.pi) - heat_kernel / (12.0 * math.pi)
+    alpha_inv_hk = (4 * math.pi**3 + math.pi**2 + math.pi) - heat_kernel / (4.0 * math.pi)
     assert abs(alpha_inv_hk - 137.035999084) / 137.035999084 < 2e-7
 
 

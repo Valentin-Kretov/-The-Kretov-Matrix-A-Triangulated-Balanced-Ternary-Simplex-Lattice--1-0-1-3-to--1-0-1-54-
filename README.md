@@ -142,6 +142,24 @@ Solar Neutrino ($\theta_{12}^{\text{PMNS}}$)	$\arcsin\sqrt{\frac{1}{3} - \frac{1
 
 (Within each 3-node triangular circuit of Layer II, fermion masses arise via the Brannen–Koide circulant eigenvalue equation $\sqrt{m_k} = \mu_0 (1 + \sqrt{2}\cos(\theta_0 + 2\pi k/3))$, where $\sqrt{2}$ is the native graph eigenvalue quantum).
 
+#### 4.2.1. Discrete Variational Principle & Equations of Motion ($\delta S_{\text{dyn}} = 0$)
+
+The temporal evolution is governed directly by the ternary alphabet $\{-1, 0, +1\}$ using symmetric triadic time differences:
+
+$$D_t \Phi_v(t) = \frac{\Phi_v(t+\tau_0) - U_{v,t}\Phi_v(t-\tau_0)}{2\tau_0}$$
+
+The full dynamical action combining time kinetics, lattice potential across 54 edges, plaquette terms, and self-interactions is defined as:
+
+$$S_{\text{dyn}}[\Phi, U] = \sum_{t} \tau_0 \left[ \sum_{v \in \Omega_3} \left| D_t \Phi_v(t) \right|^2 - c_0^2 \sum_{\langle u,v \rangle \in E_{54}} \left| \Phi_u(t) - U_{uv}(t)\Phi_v(t) \right|^2 - \beta \sum_{\square \in F_{36}} \text{Re}\,\text{Tr}\left(U_{\square}(t)\right) - V_{\text{self}}(\Phi) \right]$$
+
+Applying $\delta S_{\text{dyn}} = 0$ provides the discrete matter wave and gauge field equations:
+1. **Matter Field Wave Equation ($\delta S / \delta \Phi_v^* = 0$):**
+   $$\frac{\Phi_v(t+\tau_0) - 2\Phi_v(t) + \Phi_v(t-\tau_0)}{\tau_0^2} + c_0^2 \left(\Delta_{\Omega_3}^{(U)} \Phi\right)_v(t) + \frac{\partial V_{\text{self}}}{\partial \Phi_v^*} = 0$$
+   For the full mathematical expressions and derivation steps, see the referenced repository documentation.
+2. **Discrete Gauge Field Equations ($\delta S / \delta U_{uv} = 0$):**
+   $$\beta \sum_{\square \supset \langle u,v \rangle} \text{Im}\,\text{Tr}\left(T^a U_{\square}(t)\right) = 2 c_0^2 \, \text{Im}\left(\Phi_u^\dagger(t) T^a U_{uv}(t) \Phi_v(t)\right) \equiv J_{uv}^a(t)$$
+
+
 ### 4.3. Continuum Limit (Yang–Mills, Dirac, Einstein), Topological Path Integral & Discrete RG Flow
 
 To elevate the discrete lattice action $S[\Phi, U]$ from a phenomenological model to a first-principles dynamical field theory, we derive the continuous equations of motion, the parameter-free topological loop correction, and the energy-scale running of couplings directly from the invariants of $\Omega_3$ ($V = 27, E = 54, F = 36$):

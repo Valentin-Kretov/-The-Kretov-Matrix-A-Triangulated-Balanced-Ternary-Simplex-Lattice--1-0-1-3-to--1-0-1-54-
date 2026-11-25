@@ -513,6 +513,10 @@ def test_v73_unified_369_and_gravity():
     assert res["cycle_6"] ** res["stratum_9"] == 3 ** 54
     assert abs(res["deficit_angle_vacuum"]) < 1e-15
     assert abs(res["a0_over_lpl"] - 2.096294) < 1e-5
+    assert abs(res["ns_cmb"] - (26.0 / 27.0)) < 1e-15
+    import math
+    phi_growth = 0.5 * (1.0 + math.sqrt(5.0))
+    assert abs((phi_growth ** 2) - phi_growth - 1.0) < 1e-15
 
 
 def test_v73_heat_kernel_loop_derivation():

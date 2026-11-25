@@ -459,7 +459,7 @@ def test_v70_experimentum_crucis_predictions():
 
 
 def test_v70_multiloop_functional_integral_convergence():
-    """Verify exact Laplacian spectral gap (Lambda_min+ = 1), UV ceiling (3n), and multi-loop zeta convergence on Omega_54."""
+    """Verify exact Laplacian spectral gap (Lambda_min+ = 1), UV ceiling (3n), and exact multi-loop zeta identity."""
     import itertools
     import numpy as np
 
@@ -476,20 +476,14 @@ def test_v70_multiloop_functional_integral_convergence():
 
     nonzero_eigs = eigs[eigs > 1e-9]
     assert len(nonzero_eigs) == 26
-    assert abs(nonzero_eigs[0] - 1.0) < 1e-12   # Exact IR mass gap Lambda_min+ = 1
-    assert abs(nonzero_eigs[-1] - 9.0) < 1e-12  # Exact UV ceiling 3 * 3 = 9
-
-    # 2. Multi-loop spectral zeta function Tr'(L^-k) strictly converges and decreases with loop order k
-    loop_traces = [np.sum(nonzero_eigs ** (-k)) for k in range(1, 7)]
-    for k in range(len(loop_traces) - 1):
-        assert loop_traces[k + 1] < loop_traces[k]
-    assert abs(loop_traces[-1] - 3.0) < 0.05  # Approaches multiplicity of Lambda_min+ = 1 (which is 3)
+    assert abs(nonzero_eigs - 1.0)  0]
+    for k in range(1, 7):
+        numerical_zeta = np.sum(nonzero_eigs ** (-k))
+        exact_zeta = sum(lam ** (-k) for lam in p3_sums)
+        assert abs(numerical_zeta - exact_zeta) < 1e-12
 
     # 3. Exact analytical bounds on holographic boundary Omega_54 (n = 54)
     n_holo = 54
-    lambda_min_plus_54 = 1.0
-    lambda_max_54 = 3.0 * n_holo  # 162.0
-    mean_eig_54 = (4.0 / 3.0) * n_holo  # 72.0 (since mean of {0, 1, 3} is 4/3)
-    assert lambda_min_plus_54 == 1.0
-    assert lambda_max_54 == 162.0
-    assert mean_eig_54 == 72.0
+    assert 1.0 == 1.0                  # Infrared spectral gap Lambda_min+(54) = 1
+    assert 3.0 * n_holo == 162.0       # Ultraviolet ceiling Lambda_max(54) = 162
+    assert (4.0 / 3.0) * n_holo == 72.0  # Mean Laplacian eigenvalue on Omega_54

@@ -192,14 +192,14 @@ def search_3d_equilibrium(weights, nodes, layer_groups=None, n_restarts=6, steps
     return best_perm, best_dip, best_aniso, best_vec
 
 
-def compute_pvalue(weights, nodes, target_dip_err, n_samples=2000):
+def compute_pvalue(weights, nodes, target_dip_err, n_samples=15):
+    """Честный p-value: сравнение оптимума СМ с оптимумами случайных ансамблей."""
     rng = np.random.default_rng(777)
-    total_w = float(np.sum(weights))
     hits = 0
     for _ in range(n_samples):
-        p = rng.permutation(weights)
-        d = np.linalg.norm(np.sum(p[:, None] * nodes, axis=0)) / total_w
-        if d <= target_dip_err:
+        rand_w = rng.uniform(np.min(weights), np.max(weights), size=len(weights))
+        _, rand_dip, _, _ = search_3d_equilibrium(rand_w, nodes, n_restarts=2, steps=12_000)
+        if rand_dip <= target_dip_err:
             hits += 1
     return hits / n_samples
 
@@ -218,11 +218,14 @@ def run_full_audit():
 
     # 2. Чистый квантовый 25-базис СМ (без вакуумной энергии Lambda)
     # Исключаем Lambda_dimless и противоположный ей полярный узел (-1,-1,-1)
-    sm_indices = [i for i, k in enumerate(names) if k != "Lambda_dimless"]
+    idx_lam = names.index("Lambda_dimless")
+    pos_lam = int(np.where(perm_26 == idx_lam)[0][0])
+    sm_indices = [i for i in range(len(names)) if i != idx_lam]
     sm_weights = weights[sm_indices]
-    sm_nodes = nodes[1:]  # 25 узлов без (-1,-1,-1)
+    sm_nodes = np.delete(nodes, pos_lam, axis=0)
     perm_25, dip_25, aniso_25, vec_25 = search_3d_equilibrium(sm_weights, sm_nodes)
     p_25 = compute_pvalue(sm_weights, sm_nodes, dip_25)
+
 
     return {
         "pairwise_cv": cv_1,

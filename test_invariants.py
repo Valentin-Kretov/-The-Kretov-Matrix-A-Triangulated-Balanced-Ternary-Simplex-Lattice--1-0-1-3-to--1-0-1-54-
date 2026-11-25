@@ -356,3 +356,38 @@ def test_v70_cw_cell_complex_invariants():
     assert F == 36 and C == 8
     assert len(nodes) - len(edges) + F == 9
     assert len(nodes) - len(edges) + F - C == 1
+
+
+def test_v70_discrete_euler_lagrange_evolution():
+    """Verify exact symplectic energy conservation of the discrete wave equation on Omega_3."""
+    import itertools
+    import numpy as np
+
+    nodes = list(itertools.product([-1, 0, 1], repeat=3))
+    n = len(nodes)
+    A = np.zeros((n, n))
+    for i, u in enumerate(nodes):
+        for j, v in enumerate(nodes):
+            if sum(abs(a - b) for a, b in zip(u, v)) == 1:
+                A[i, j] = 1.0
+    D = np.diag(A.sum(axis=1))
+    L = D - A
+
+    dt = 0.05
+    phi_prev = np.zeros(n)
+    phi_curr = np.zeros(n)
+    phi_curr[13] = 1.0  # Excitation at central hub (0,0,0)
+
+    def discrete_energy(p_prev, p_curr):
+        vel = (p_curr - p_prev) / dt
+        kinetic = 0.5 * np.dot(vel, vel)
+        potential = 0.5 * np.dot(p_curr, L @ p_prev)
+        return kinetic + potential
+
+    E0 = discrete_energy(phi_prev, phi_curr)
+    for _ in range(500):
+        phi_next = 2 * phi_curr - phi_prev - (dt ** 2) * (L @ phi_curr)
+        phi_prev, phi_curr = phi_curr, phi_next
+
+    E_final = discrete_energy(phi_prev, phi_curr)
+    assert abs(E_final - E0) < 1e-12

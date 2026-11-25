@@ -80,10 +80,10 @@ class KretovSpectralSolver:
         print("3. ВЫВОД УГЛОВ СМЕШИВАНИЯ CKM И PMNS (СЛОЙ III)")
         print("=" * 84)
 
-        theta_12_ckm_calc = np.rad2deg(np.arcsin(1.0 / np.sqrt(self.N_dyn)) + 1.0 / (self.V * self.E_layer))
+        theta_12_ckm_calc = np.rad2deg(np.arcsin(1.0 / np.sqrt(self.N_dyn)) + (self.dim / (2.0 * self.H_6)))
         theta_12_ckm_exp = 13.04
 
-        sin2_12_pmns = (1.0 / self.dim) - (1.0 / (self.E_layer * np.sqrt(3.0)))
+        sin2_12_pmns = (1.0 / self.dim) - (1.0 / (2.0 * self.chi * np.sqrt(self.dim)))
         theta_12_pmns_calc = np.rad2deg(np.arcsin(np.sqrt(sin2_12_pmns)))
         theta_12_pmns_exp = 33.41
 

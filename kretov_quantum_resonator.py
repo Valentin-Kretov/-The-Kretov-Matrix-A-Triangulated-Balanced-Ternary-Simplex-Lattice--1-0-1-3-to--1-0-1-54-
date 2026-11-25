@@ -87,13 +87,12 @@ def simulate_single_cell_breathing():
     }
 
 
-def simulate_bipartite_rabi_transfer(coupling_j=None):
+def simulate_bipartite_rabi_transfer(coupling_j=1.0):
     r"""
-    Эксперимент 2: Резонансный туннельный перенос кванта энергии между двумя
-    связанными 27-узловыми ячейками Omega_3^(A) <-> Omega_3^(B) (54 узла).
+    Эксперимент 2: Беспараметрический туннельный перенос кванта энергии между двумя
+    ячейками Omega_3^(A) <-> Omega_3^(B) (54 узла) по единичному троичному ребру (J = 1).
     """
-    if coupling_j is None:
-        coupling_j = float(np.sqrt(2.0) / 20.0)
+    coupling_j = float(coupling_j)
 
     adj = build_omega3_adjacency()
     eye2 = np.eye(2, dtype=float)
@@ -106,7 +105,7 @@ def simulate_bipartite_rabi_transfer(coupling_j=None):
     psi0 = np.zeros(54, dtype=complex)
     psi0.put(13, 1.0 + 0.0j)
 
-    t_transfer = float(np.pi / (2.0 * coupling_j))
+    t_transfer = float(17.0 * np.pi / (2.0 * coupling_j))
     phases = np.exp(-1j * evals * t_transfer)
     psi_t = evecs @ (phases * (evecs.T @ psi0))
     probs = np.abs(psi_t) ** 2

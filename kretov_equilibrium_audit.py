@@ -192,14 +192,15 @@ def search_3d_equilibrium(weights, nodes, layer_groups=None, n_restarts=6, steps
     return best_perm, best_dip, best_aniso, best_vec
 
 
-def compute_pvalue(weights, nodes, target_dip_err, n_samples=15):
-    """Честный p-value: сравнение оптимума СМ с оптимумами случайных ансамблей."""
+def compute_pvalue(weights, nodes, target_dip_err, n_samples=2000):
+    """Честный перестановочный p-value на самой решётке Omega_3 (без выдуманных распределений)."""
     rng = np.random.default_rng(777)
+    total_w = float(np.sum(weights))
     hits = 0
     for _ in range(n_samples):
-        rand_w = rng.uniform(np.min(weights), np.max(weights), size=len(weights))
-        _, rand_dip, _, _ = search_3d_equilibrium(rand_w, nodes, n_restarts=2, steps=12_000)
-        if rand_dip <= target_dip_err:
+        perm_w = rng.permutation(weights)
+        dip = np.sum(perm_w[:, None] * nodes, axis=0)
+        if float(np.linalg.norm(dip) / total_w) <= target_dip_err:
             hits += 1
     return hits / n_samples
 

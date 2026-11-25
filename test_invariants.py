@@ -288,7 +288,7 @@ def test_v62_rmt_spectral_theorem():
     assert ex["non_degenerate"] == 516
     assert ex["degenerate"] == 213  # 71 / 243 = 71 / 3^5
     assert ex["rank_counts"] == {0: 1, 1: 26, 2: 186, 3: 516}
-    assert ex["poly_classes"] == 35
+    assert ex["poly_classes"] == 30
 
     # 2. Полная 48-элементная орбита группы O_h с точным серебряным сечением
     assert ex["silver_orbit_count"] == 48

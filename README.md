@@ -9,7 +9,7 @@
 
 **Author:** Valentin Aleksandrovich Kretov (Кретов Валентин Александрович)  
 **Document Type:** Comprehensive Theoretical Preprint & Computational Specification  
-**Version:** 7.1 (First-Principles Variational Dynamics, Multi-Loop UV/IR Finiteness & RG Decimation Edition)
+**Version:** 7.2 (Pure Zero-Adjustment Root Algebra & Topological Consistency Edition)
 **DOI:** `10.5281/zenodo.24419886`  
 **License:** MIT (Code) / CC BY 4.0 (Text & Figures)  
 
@@ -134,7 +134,8 @@ Initial flat Euclidean approximations ($90^\circ$ right-angle geometry and conti
 
 Physical Parameter	Flat Euclidean Approximation	Spherical Triangulated Formula	Derived Value	Experimental (PDG)	Match
 Strong CP ($\theta_{\text{QCD}}$)	$0$	$\arg\det(U_{(0,0,0)}) = 0$	0	$< 10^{-10}$	100.000%
-Inverse Fine-Structure ($\alpha^{-1}$)	$4\pi^3 + \pi^2 + \pi$	$(4\pi^3 + \pi^2 + \pi) - \frac{1}{54 \times 60}$	137.035995	137.035999	99.999997%
+
+**Inverse Fine-Structure ($\alpha^{-1}$)** | $4\pi^3 + \pi^2 + \pi$ | $(4\pi^3 + \pi^2 + \pi) - \frac{1}{972\pi}$ | $137.035976$ | $137.035999$ | $99.99998\%$ |
 Weak Mixing ($\sin^2\theta_W$)	$3 / 13$	$\frac{3}{13} + \frac{1}{3^7}$	0.231226	0.231220	99.997%
 Strong Coupling ($\alpha_s$)	$1 / (6\sqrt{2})$	$\frac{1}{6\sqrt{2}}\left(1 + \frac{1}{3^6}\right)$	0.118013	0.118000	99.989%
 Quark Cabibbo ($\theta_{12}^{\text{CKM}}$)	$\arcsin(1/\sqrt{20})$	$\arcsin\left(\frac{1}{\sqrt{20}}\right) + \frac{1}{27 \times 18}\text{ rad}$	13.0389°	13.0400°	99.992%

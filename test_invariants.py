@@ -301,3 +301,40 @@ def test_v62_rmt_spectral_theorem():
     assert wig.get(9).get("edge_ratio") > 0.80
     assert wig.get(27).get("edge_ratio") > 0.90
     assert wig.get(27).get("zero_mode_fraction") < 0.01
+
+
+def test_v63_quantum_resonator():
+    """
+    Проверка динамики элементарного кванта энергии (уравнение Шредингера)
+    на 27-узловой решетке Omega_3 и двухъячеечного туннельного переноса (54 узла).
+    """
+    import numpy as np
+    from kretov_quantum_resonator import run_quantum_resonator_audit
+
+    res = run_quantum_resonator_audit()
+    br = res.get("breathing")
+    rb = res.get("rabi")
+    ns = res.get("noise")
+
+    # 1. Унитарность и период де Бройля T = pi * sqrt(2)
+    assert np.isclose(br.get("norm_preserved"), 1.0, atol=1e-12)
+    assert np.isclose(br.get("period"), np.pi * np.sqrt(2.0), atol=1e-12)
+
+    # 2. Идеальный квантовый возврат (100%) в (0,0,0) и выброс на 8 вершин на T/2
+    assert br.get("full_revival_prob") > 0.999999
+    assert br.get("half_corners_prob") > 0.999999
+    assert br.get("half_center_prob") < 1e-12
+
+    # 3. Симметричное дыхание оболочек на t = T/4: 1/8, 3/8, 3/8, 1/8
+    c_q, f_q, e_q, v_q = br.get("quarter_shells")
+    assert np.isclose(c_q, 0.125, atol=1e-12)
+    assert np.isclose(f_q, 0.375, atol=1e-12)
+    assert np.isclose(e_q, 0.375, atol=1e-12)
+    assert np.isclose(v_q, 0.125, atol=1e-12)
+
+    # 4. Резонансная туннельная передача импульса во вторую ячейку Omega_3 (> 95%)
+    assert rb.get("max_total_b_prob") > 0.95
+    assert rb.get("max_center_b_prob") > 0.90
+
+    # 5. Защита кванта от флуктуаций вакуума благодаря щели Delta E = sqrt(2)
+    assert ns.get("mean_revival_fidelity") > 0.50

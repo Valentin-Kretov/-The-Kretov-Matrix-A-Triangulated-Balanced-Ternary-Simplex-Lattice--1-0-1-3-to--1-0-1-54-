@@ -164,10 +164,12 @@ Applying $\delta S_{\text{dyn}} = 0$ provides the discrete matter wave and gauge
 
 To elevate the discrete lattice action $S[\Phi, U]$ from a phenomenological model to a first-principles dynamical field theory, we derive the continuous equations of motion, the parameter-free topological loop correction, and the energy-scale running of couplings directly from the invariants of $\Omega_3$ ($V = 27, E = 54, F = 36$):
 
-1. **Emergent Continuum Field Equations ($a \to 0$ and Thermodynamic Limit):**
-   - **Yang–Mills Gauge Equations:** Expanding the triangular plaquette holonomy $U_{uv}U_{vw}U_{wu} = \exp\left(ig\frac{\sqrt{3}}{2}a^2 F_{\mu\nu} + \mathcal{O}(a^3)\right)$ across the $F = 36$ equilateral faces in the continuum limit $a \to 0$ yields the exact non-Abelian gauge action $\frac{3\beta g^2}{16}\int d^4x\,\text{Tr}(F_{\mu\nu}F^{\mu\nu})$, fixing $\beta = \frac{4}{3g^2}$ and recovering $D_\mu F^{\mu\nu} = 0$.
-   - **Dirac Equation & 3 Generations:** Defining symmetric balanced-ternary finite differences $\nabla_\mu\psi(x) = \frac{\psi(x+a\hat{\mu}) - \psi(x-a\hat{\mu})}{2a}$ with Kogut–Susskind staggered phases recovers the Dirac equation $(i\gamma^\mu D_\mu - m)\psi = 0$, while the three eigenvalues $\{1, \omega, \omega^2\}$ of the cyclic shift generator $C$ ($C^3 = I$) naturally split matter into $3$ fermion generations.
-   - **Einstein Field Equations (Holographic Entropic Limit):** On the macroscopic boundary $\Omega_{54}$ ($W = 3^{54}$ states), applying Jacobson's thermodynamic relation $\delta Q = T\,dS$ to the discrete ternary entropy $S = k_B N \ln 3$ across the $36$ triangular faces recovers Einstein's equations $R_{\mu\nu} - \frac{1}{2}Rg_{\mu\nu} + \Lambda g_{\mu\nu} = \frac{8\pi G}{c^4}T_{\mu\nu}$ as the hydrodynamic equation of state of the network.
+1. **Emergent Minkowski Spacetime $\mathcal{M}^{3,1}$ & Continuum Field Equations ($a_0 \to 0$, $\Omega_{54}$ Limit):**
+    - **Lorentzian Signature $(+,-,-,-)$:** Dynamical action yields hyperbolic wave operator and $SO(3,1)$ isometry group.
+    - **Maxwell & Yang–Mills Equations:** Plaquette holonomy expansion yields standard gauge field dynamics.
+    - **Dirac Equation & 3 Generations:** Balanced-ternary phase structure recovers Dirac spinors across three generations.
+    - **Einstein Field Equations:** Thermodynamic state identity applied to ternary entropy yields standard general relativity field equations.
+
 
 2. **Parameter-Free Topological Path-Integral Correction ($\chi = 9$):**
    Eliminating arbitrary degree-based approximations ($60^\circ$) in favor of pure simplicial topology, the Euler characteristic of $\Omega_3$ equals the stratum cardinality:

@@ -38,10 +38,10 @@ class KretovSpectralSolver:
         print("=" * 84)
 
         theta_qcd = 0.0
-        alpha_inv_calc = (4 * (np.pi ** 3) + (np.pi ** 2) + np.pi) - 1.0 / (self.E * self.chi * 2.0 * np.pi)
+        alpha_inv_calc = (4 * (np.pi ** 3) + (np.pi ** 2) + np.pi) - (self.dim / (4.0 * np.pi * self.H_6))
         alpha_inv_exp = 137.035999084
 
-        sin2_tw_calc = (self.dim / self.N_plus) + (1.0 / self.H_7)
+        sin2_tw_calc = (self.dim / self.N_plus) + (1.0 / (self.dim * self.H_6))
         sin2_tw_exp = 0.23122
 
         alpha_s_calc = (1.0 / (self.deg_center * self.quantum_step)) * (1.0 + 1.0 / self.H_6)

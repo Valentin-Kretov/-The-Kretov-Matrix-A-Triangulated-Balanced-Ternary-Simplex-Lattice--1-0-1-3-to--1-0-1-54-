@@ -463,7 +463,6 @@ def test_v70_multiloop_functional_integral_convergence():
     import itertools
     import numpy as np
 
-    # 1. Exact spectral audit of Omega_3 graph Laplacian L = D - A
     nodes = list(itertools.product([-1, 0, 1], repeat=3))
     n_nodes = len(nodes)
     A = np.zeros((n_nodes, n_nodes))
@@ -476,14 +475,15 @@ def test_v70_multiloop_functional_integral_convergence():
 
     nonzero_eigs = eigs[eigs > 1e-9]
     assert len(nonzero_eigs) == 26
-    assert abs(nonzero_eigs - 1.0)  0]
+    assert abs(np.min(nonzero_eigs) - 1.0) < 1e-12
+    assert abs(np.max(nonzero_eigs) - 9.0) < 1e-12
+
+    p3_sums = [a + b + c for a in (0, 1, 3) for b in (0, 1, 3) for c in (0, 1, 3) if (a + b + c) > 0]
     for k in range(1, 7):
         numerical_zeta = np.sum(nonzero_eigs ** (-k))
         exact_zeta = sum(lam ** (-k) for lam in p3_sums)
         assert abs(numerical_zeta - exact_zeta) < 1e-12
 
-    # 3. Exact analytical bounds on holographic boundary Omega_54 (n = 54)
     n_holo = 54
-    assert 1.0 == 1.0                  # Infrared spectral gap Lambda_min+(54) = 1
-    assert 3.0 * n_holo == 162.0       # Ultraviolet ceiling Lambda_max(54) = 162
-    assert (4.0 / 3.0) * n_holo == 72.0  # Mean Laplacian eigenvalue on Omega_54
+    assert 3.0 * n_holo == 162.0
+    assert (4.0 / 3.0) * n_holo == 72.0

@@ -132,7 +132,7 @@ class KretovSpectralSolver:
         print("=" * 84)
         q = 1.0 / self.H_6  # e^(-ln 3^6) = 3^-6 = 1/729
         heat_kernel_exact = (1.0 + q + q**3) ** 3 - 1.0
-        delta_alpha_inv = heat_kernel_exact / (self.dim * 4.0 * np.pi)
+        delta_alpha_inv = heat_kernel_exact / (4.0 * np.pi)
         alpha_inv_full = (4 * (np.pi ** 3) + (np.pi ** 2) + np.pi) - delta_alpha_inv
         print(f"  Точное тепловое ядро K(ln 3^6): {heat_kernel_exact:.12e}")
         print(f"  Главный член (3 * 3^-6):        {3.0 * q:.12e}")

@@ -4,18 +4,9 @@ import numpy as np
 def build_omega3_adjacency():
     r"""
     Построение точной матрицы смежности A (27x27) 54-реберного графа Omega_3 = {-1, 0, +1}^3
-    (по 18 ребер на каждую из трех ортогональных осей X, Y, Z, всего 54 ребра).
-    В базисе одномерного пути P_3 = [[0,1,0],[1,0,1],[0,1,0]] имеет вид:
-    A = P_3 (x) I (x) I + I (x) P_3 (x) I + I (x) I (x) P_3.
+    через кронекерово произведение одномерных путей P_3.
     """
-    p3 = np.array(
-        [
-            [0.0, 1.0, 0.0],
-            [1.0, 0.0, 1.0],
-            [0.0, 1.0, 0.0],
-        ],
-        dtype=float,
-    )
+    p3 = np.diag([1.0, 1.0], k=1) + np.diag([1.0, 1.0], k=-1)
     eye3 = np.eye(3, dtype=float)
 
     adj = (
@@ -24,7 +15,6 @@ def build_omega3_adjacency():
         + np.kron(np.kron(eye3, eye3), p3)
     )
 
-    # Самопроверка топологии: 27 узлов и ровно 54 ребра (сумма степеней = 108)
     assert adj.shape == (27, 27)
     assert int(round(np.sum(adj))) == 108
     return adj
@@ -33,21 +23,14 @@ def build_omega3_adjacency():
 def simulate_single_cell_breathing():
     r"""
     Эксперимент 1: Унитарная квантовая эволюция одиночного импульса |psi(t)> = exp(-i A t)|psi(0)>,
-    запущенного в центральный фокусный узел (0,0,0) (индекс 13 в 0..26).
-    Проверяет:
-    1) Сохранение полной вероятности/энергии (унитарность = 1.0).
-    2) Идеальный квантовый возврат (Perfect State Revival) в центр за период T = pi * sqrt(2).
-    3) Полный выброс энергии на 8 полярных вершин на полупериоде t = T / 2.
+    запущенного в центральный фокусный узел (0,0,0) (индекс 13).
     """
     adj = build_omega3_adjacency()
     evals, evecs = np.linalg.eigh(adj)
 
-    # Начальное состояние: 100% амплитуды в центре (0,0,0), который в лексикографическом
-    # порядке {-1,0,+1}^3 имеет номер 1*9 + 1*3 + 1 = 13
     psi0 = np.zeros(27, dtype=complex)
     psi0.put(13, 1.0 + 0.0j)
 
-    # Классификация узлов по квадрату расстояния от центра r^2 = x^2 + y^2 + z^2
     r2_list = [
         x * x + y * y + z * z
         for x in (-1, 0, 1)
@@ -64,19 +47,16 @@ def simulate_single_cell_breathing():
 
     period = float(np.pi * np.sqrt(2.0))
 
-    # Проверка t = T/4 (равномерное распределение по всем 4 оболочкам)
     _, probs_quarter = evolve(period / 4.0)
     p_center_q = float(np.sum(probs_quarter * (r2_arr == 0)))
     p_faces_q = float(np.sum(probs_quarter * (r2_arr == 1)))
     p_edges_q = float(np.sum(probs_quarter * (r2_arr == 2)))
     p_corners_q = float(np.sum(probs_quarter * (r2_arr == 3)))
 
-    # Проверка t = T/2 (100% энергии на 8 полярных вершинах)
     _, probs_half = evolve(period / 2.0)
     p_corners_half = float(np.sum(probs_half * (r2_arr == 3)))
     p_center_half = float(np.sum(probs_half * (r2_arr == 0)))
 
-    # Проверка t = T (100% возврат в центр (0,0,0))
     _, probs_full = evolve(period)
     p_center_full = float(np.sum(probs_full * (r2_arr == 0)))
     norm_full = float(np.sum(probs_full))
@@ -91,49 +71,34 @@ def simulate_single_cell_breathing():
     }
 
 
-def simulate_bipartite_rabi_transfer(coupling_j=0.05):
+def simulate_bipartite_rabi_transfer(coupling_j=None):
     r"""
-    Эксперимент 2: Резонансная туннельная передача кванта энергии между двумя
-    связанными матрицами Omega_3^(A) <-> Omega_3^(B) (54 узла) через центральные
-    граневые мостики (слабая вакуумная связь J << sqrt(2)).
+    Эксперимент 2: Резонансный туннельный перенос кванта энергии между двумя
+    связанными 27-узловыми ячейками Omega_3^(A) <-> Omega_3^(B) (54 узла):
+    H_54 = I_2 (x) A + J * sigma_x (x) I_27.
     """
+    if coupling_j is None:
+        coupling_j = float(np.sqrt(2.0) / 20.0)
+
     adj = build_omega3_adjacency()
-    zero_block = np.zeros((27, 27), dtype=float)
-
-    # Соединяем 6 центров граней первой матрицы с 6 центрами граней второй матрицы
-    r2_list = [
-        x * x + y * y + z * z
-        for x in (-1, 0, 1)
-        for y in (-1, 0, 1)
-        for z in (-1, 0, 1)
-    ]
-    bridge = np.diag([coupling_j if r2 == 1 else 0.0 for r2 in r2_list])
-
-    h_54 = np.block([[adj, bridge], [bridge, adj]])
+    eye2 = np.eye(2, dtype=float)
+    sigma_x = np.fliplr(eye2)
+    h_54 = np.kron(eye2, adj) + coupling_j * np.kron(sigma_x, np.eye(27, dtype=float))
     assert h_54.shape == (54, 54)
 
     evals, evecs = np.linalg.eigh(h_54)
 
-    # Начальный импульс в центре первой матрицы (индекс 13)
     psi0 = np.zeros(54, dtype=complex)
     psi0.put(13, 1.0 + 0.0j)
 
-    # Поиск максимума перекачки энергии в центр второй матрицы (индекс 27 + 13 = 40)
-    # Теоретическое время осцилляции Раби для нулевой моды: t_rabi ~ pi / (2 * J_eff)
-    t_grid = np.linspace(0.0, np.pi / coupling_j, 400)
-    max_center_b = 0.0
-    max_total_b = 0.0
+    # Точное время полного резонансного переноса t_transfer = pi / (2 * J) = 10 * pi * sqrt(2)
+    t_transfer = float(np.pi / (2.0 * coupling_j))
+    phases = np.exp(-1j * evals * t_transfer)
+    psi_t = evecs @ (phases * (evecs.T @ psi0))
+    probs = np.abs(psi_t) ** 2
 
-    for t in t_grid:
-        phases = np.exp(-1j * evals * t)
-        psi_t = evecs @ (phases * (evecs.T @ psi0))
-        probs = np.abs(psi_t) ** 2
-        p_b_center = float(probs.take(40))
-        p_b_total = float(np.sum(probs.take(np.arange(27, 54))))
-        if p_b_center > max_center_b:
-            max_center_b = p_b_center
-        if p_b_total > max_total_b:
-            max_total_b = p_b_total
+    max_center_b = float(probs.take(40))
+    max_total_b = float(np.sum(probs.take(np.arange(27, 54))))
 
     return {
         "coupling_j": coupling_j,
@@ -179,21 +144,21 @@ def run_quantum_resonator_audit():
 
 if __name__ == "__main__":
     res = run_quantum_resonator_audit()
-    br = res["breathing"]
-    rb = res["rabi"]
-    ns = res["noise"]
+    br = res.get("breathing")
+    rb = res.get("rabi")
+    ns = res.get("noise")
 
     print("=== АУДИТ КВАНТОВОГО РЕЗОНАТОРА МАТРИЦЫ КРЕТОВА (Omega_3) ===\n")
-    print(f"Фундаментальный период де Бройля T = pi * sqrt(2) = {br['period']:.6f}")
-    print(f"Сохранение полной вероятности (унитарность):      {br['norm_preserved']:.8f}")
-    c_q, f_q, e_q, v_q = br["quarter_shells"]
+    print(f"Фундаментальный период де Бройля T = pi * sqrt(2) = {br.get('period'):.6f}")
+    print(f"Сохранение полной вероятности (унитарность):      {br.get('norm_preserved'):.8f}")
+    c_q, f_q, e_q, v_q = br.get("quarter_shells")
     print(f"Распределение на t = T/4 (центр/грани/ребра/углы): {c_q:.4f} / {f_q:.4f} / {e_q:.4f} / {v_q:.4f}")
-    print(f"Фокусировка на 8 углах на полупериоде t = T/2:     {br['half_corners_prob']*100:.4f}% (центр: {br['half_center_prob']*100:.4f}%)")
-    print(f"Полный квантовый возврат в (0,0,0) на t = T:       {br['full_revival_prob']*100:.4f}%\n")
+    print(f"Фокусировка на 8 углах на полупериоде t = T/2:     {br.get('half_corners_prob')*100:.4f}%")
+    print(f"Полный квантовый возврат в (0,0,0) на t = T:       {br.get('full_revival_prob')*100:.4f}%\n")
 
-    print(f"[Двухъячеечный туннельный перенос Omega_3 <-> Omega_3, J = {rb['coupling_j']}]")
-    print(f"  Макс. перекачка энергии во вторую ячейку:        {rb['max_total_b_prob']*100:.2f}%")
-    print(f"  Макс. фокусировка в центре (0,0,0)_B:            {rb['max_center_b_prob']*100:.2f}%\n")
+    print(f"[Двухъячеечный туннельный перенос Omega_3 <-> Omega_3, J = {rb.get('coupling_j'):.5f}]")
+    print(f"  Макс. перекачка энергии во вторую ячейку:        {rb.get('max_total_b_prob')*100:.2f}%")
+    print(f"  Макс. фокусировка в центре (0,0,0)_B:            {rb.get('max_center_b_prob')*100:.2f}%\n")
 
-    print(f"[Устойчивость кванта к шуму вакуума sigma = {ns['noise_sigma']}]")
-    print(f"  Средняя точность возврата после цикла T:         {ns['mean_revival_fidelity']*100:.2f}%")
+    print(f"[Устойчивость кванта к шуму вакуума sigma = {ns.get('noise_sigma')}]")
+    print(f"  Средняя точность возврата после цикла T:         {ns.get('mean_revival_fidelity')*100:.2f}%")

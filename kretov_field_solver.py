@@ -125,9 +125,24 @@ class KretovSpectralSolver:
         print(f"  Энергетическая дисперсия (sigma):     {std_q:.4f} (теория: ровно 6.0000)")
         print(f"  Доля состояний равновесия (Q = 0):    {zero_share:.2f}% (теория: 6.65%)\n")
 
+    def verify_heat_kernel_derivation(self):
+        """Вывод однопетлевой поправки из точного теплового ядра Лапласиана K(ln 3^6)."""
+        print("=" * 84)
+        print("5. ВЫВОД ПОПРАВОК ИЗ ТЕПЛОВОГО ЯДРА ЛАПЛАСИАНА K_Omega3(ln 3^6)")
+        print("=" * 84)
+        q = 1.0 / self.H_6  # e^(-ln 3^6) = 3^-6 = 1/729
+        heat_kernel_exact = (1.0 + q + q**3) ** 3 - 1.0
+        delta_alpha_inv = heat_kernel_exact / (self.dim * 4.0 * np.pi)
+        alpha_inv_full = (4 * (np.pi ** 3) + (np.pi ** 2) + np.pi) - delta_alpha_inv
+        print(f"  Точное тепловое ядро K(ln 3^6): {heat_kernel_exact:.12e}")
+        print(f"  Главный член (3 * 3^-6):        {3.0 * q:.12e}")
+        print(f"  Полное однопетлевое alpha^-1:   {alpha_inv_full:.9f} (PDG: 137.035999084)\n")
+
+
 if __name__ == "__main__":
     solver = KretovSpectralSolver()
     solver.derive_gauge_couplings()
     solver.derive_lepton_masses_circulant()
     solver.derive_mixing_angles()
     solver.verify_cosmological_limit_54d(n_trials=1_000_000)
+    solver.verify_heat_kernel_derivation()

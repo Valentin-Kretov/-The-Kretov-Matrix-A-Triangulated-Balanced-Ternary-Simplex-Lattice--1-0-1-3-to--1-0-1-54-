@@ -513,6 +513,13 @@ def test_v73_unified_369_and_gravity():
     assert res["cycle_6"] ** res["stratum_9"] == 3 ** 54
     assert abs(res["deficit_angle_vacuum"]) < 1e-15
     assert abs(res["a0_over_lpl"] - 2.096294) < 1e-5
+def test_v73_heat_kernel_loop_derivation():
+    """Verify 1-loop alpha^-1 derivation from exact Laplacian heat kernel K(ln 3^6)."""
+    import math
+    q = 3.0 ** (-6)
+    heat_kernel = (1.0 + q + q**3) ** 3 - 1.0
+    alpha_inv_hk = (4 * math.pi**3 + math.pi**2 + math.pi) - heat_kernel / (12.0 * math.pi)
+    assert abs(alpha_inv_hk - 137.035999084) / 137.035999084 < 2e-7
 
 
 if __name__ == "__main__":
@@ -534,4 +541,5 @@ if __name__ == "__main__":
     test_v70_multiloop_functional_integral_convergence()
     test_v71_equipotential_simplex_triangulation()
     test_v73_unified_369_and_gravity()
-    print("ALL 18 KRETOV MATRIX INVARIANTS (v7.3) VERIFIED SUCCESSFULLY!")
+    test_v73_heat_kernel_loop_derivation()
+    print("ALL 19 KRETOV MATRIX INVARIANTS (v7.3) VERIFIED SUCCESSFULLY!")

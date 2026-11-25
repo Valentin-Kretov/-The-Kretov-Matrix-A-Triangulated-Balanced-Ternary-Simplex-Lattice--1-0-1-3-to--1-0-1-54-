@@ -9,7 +9,7 @@
 
 **Author:** Valentin Aleksandrovich Kretov (Кретов Валентин Александрович)  
 **Document Type:** Comprehensive Theoretical Preprint & Computational Specification  
-**Version:** 6.3 (Quantum Energy Resonator & Bipartite State Revival Edition)
+**Version:** 7.0 (First-Principles Variational Dynamics, Lorentzian Continuum Limit & RG Decimation Edition)
 **DOI:** `10.5281/zenodo.24419886`  
 **License:** MIT (Code) / CC BY 4.0 (Text & Figures)  
 
@@ -305,6 +305,18 @@ To verify strict scale invariance across arbitrary nesting levels $\Omega_n = \{
 6. **Exact Stratum Quantization of the Charged Lepton Koide Phase ($\theta_0^{(e)} = 2/9\text{ rad}$):** Within Layer II Circuit 3, the Brannen–Koide phase parameter $\theta_0$ in $\sqrt{m_k} = \mu_0(1 + \sqrt{2}\cos(\theta_0 + 2\pi k/3))$ is quantized strictly by the $3^2 = 9$ node cardinality of a single triangular stratum: $\theta_0^{(e)} = \frac{2}{9}\text{ rad} \approx 0.222222\text{ rad}$ (matching experimental lepton masses to within $8 \times 10^{-7}$).
 7. **Cosmological–Neutrino Axis Locking ($\Sigma m_\nu \approx 59.13\text{ meV}$ from $y = \pm 1$ Stratum Balance):** Unconstrained 3D informational equilibrium (`kretov_equilibrium_audit.py`) places $\tilde{\Lambda}$ at the principal face center $(0, +1, 0)$ ($w_\Lambda \approx 279.86$) while clustering all three neutrino mass eigenstates ($y_{\nu_1}, y_{\nu_2}, y_{\nu_3}$), first-generation matter ($y_u, y_d, y_e$), and the electroweak hierarchy ($v/M_{\text{Pl}}$) onto the opposite stratum $y = -1$ to counterbalance dark energy across $\theta_{\text{QCD}} = 0$. Any experimental finding of massless neutrinos ($m_1 \to 0$) or $\Sigma m_\nu > 0.12\text{ eV}$ breaks this axial equilibrium.
 8. **Zero Cosmological Drift of Fundamental Constants ($\dot{\alpha}/\alpha = 0$):** Because the $25$ quantum parameters of the Standard Model close into a zero-dipole state ($0.037\%$ residual, $p < 10^{-4}$) centered on $\theta_{\text{QCD}} = 0$, any time-variation of $\alpha$, $\alpha_s$, or lepton-to-quark mass ratios over cosmological epochs would induce a non-zero dipole shift at $(0,0,0)$ and generate a detectable neutron EDM ($d_n \neq 0$).
+### 7.1. Pre-Registered *Experimentum Crucis* Falsification Matrix (v7.0 Benchmark)
+
+To ensure strict scientific falsifiability ahead of upcoming experimental releases (2026–2030), the following parameter-free predictions of the Kretov Matrix are immutably locked in version `v7.0`:
+
+| Observable | Lattice Origin ($\Omega_3$) | Locked Prediction (`v7.0`) | Falsification Threshold ($>5\sigma$) | Target Experiments |
+| :--- | :--- | :--- | :--- | :--- |
+| **Neutrino Mass Ordering & Sum** | Signed ternary Koide $K_\nu = +. -$ ($2/3$) & $y=\pm 1$ axial balance | **Normal Ordering**, $\Sigma m_\nu = 59.13\text{ meV}$ ($m_{1,2,3} = 0.36, 8.62, 50.15\text{ meV}$) | Inverted Ordering OR $\Sigma m_\nu \notin [55, 63]\text{ meV}$ | JUNO, DUNE, Euclid, CMB-S4 |
+| **Atmospheric Mixing Angle** | Central equilibrium hub symmetry ($\pi/4$) | $\theta_{23}^{\text{PMNS}} = 45.00^\circ$ ($\sin^2\theta_{23} = 0.5000$) | $\sin^2\theta_{23} < 0.46$ or $> 0.54$ | Hyper-Kamiokande, DUNE |
+| **Leptonic CP Phase & Jarlskog** | $120^\circ$ ($2\pi/3$) triadic shift from $\delta_{\text{CKM}}$ | $\delta_{\text{PMNS}} = 188.4^\circ \pm 3.0^\circ$, $J_{\text{PMNS}} = -0.00487$ | $\delta_{\text{PMNS}} \notin [180^\circ, 197^\circ]$ or $J_{\text{PMNS}} > 0$ | DUNE, Hyper-Kamiokande |
+| **Strong CP Angle & nEDM** | Central focal node $(0,0,0)$ locking ($\arg\det U_0 = 0$) | $\theta_{\text{QCD}} \equiv 0$, $\vert{}d_n\vert{} < 10^{-33}\text{ e}\cdot\text{cm}$ | Non-zero static nEDM detection | n2EDM (PSI), SNS nEDM |
+| **Fermion Generations** | Dimensional rank of $\Omega_3 = \{-1,0,+1\}^3$ | **Strictly $3$ generations** | 4th sequential generation or eV sterile node | HL-LHC, Short-Baseline $\nu$ |
+
 
 8. Methodological Scope & Limitations
 

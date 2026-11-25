@@ -25,6 +25,9 @@ def verify_quantum_gravity_closure():
     log10_area_planck = 243.0 * math.log10(base) + math.log10(4.0 * math.log(base))
     log10_radius_planck = 0.5 * (log10_area_planck - math.log10(4.0 * math.pi))
 
+    # 4. Спектральный наклон реликтового излучения (CMB): n_s = 1 - 2 / E_54 = 26 / 27
+    ns_cmb = 1.0 - (2.0 / edges_54)
+    
     return {
         "base": base,
         "cycle_6": cycle_6,
@@ -34,6 +37,7 @@ def verify_quantum_gravity_closure():
         "deficit_angle_vacuum": deficit_angle_vacuum,
         "a0_over_lpl": a0_over_lpl,
         "log10_radius_planck": log10_radius_planck,
+        "ns_cmb": ns_cmb,
     }
 
 
@@ -45,4 +49,5 @@ if __name__ == "__main__":
     print(f"Угол дефицита вакуума (плоскостность Минковского): {res['deficit_angle_vacuum']:.2e} рад")
     print(f"Фундаментальный шаг решетки a_0 / l_Pl = 2*sqrt(ln 3): {res['a0_over_lpl']:.6f}")
     print(f"Логарифм радиуса горизонта Вселенной log10(R_H / l_Pl): {res['log10_radius_planck']:.2f}")
+    print(f"Спектральный наклон реликтового излучения (CMB n_s): {res['ns_cmb']:.5f} (26/27)")
     print("=" * 84)

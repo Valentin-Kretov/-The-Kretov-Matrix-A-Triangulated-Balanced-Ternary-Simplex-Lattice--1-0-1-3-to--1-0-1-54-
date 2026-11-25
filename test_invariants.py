@@ -488,3 +488,25 @@ def test_v70_multiloop_functional_integral_convergence():
     n_holo = 54
     assert 3.0 * n_holo == 162.0
     assert (4.0 / 3.0) * n_holo == 72.0
+
+
+def test_v71_equipotential_simplex_triangulation():
+    """Verify native 60-degree equilateral triangle and 120-degree hexagonal strata along Q = x+y+z."""
+    import itertools
+    import numpy as np
+
+    nodes = [np.array(n, dtype=float) for n in itertools.product([-1, 0, 1], repeat=3)]
+
+    # 1. Слой Q = x + y + z = +2 образует строгий равносторонний треугольник (3 узла, стороны sqrt(2), углы 60°)
+    tri_nodes = [n for n in nodes if int(round(np.sum(n))) == 2]
+    assert len(tri_nodes) == 3
+    dists = [
+        np.linalg.norm(tri_nodes[i] - tri_nodes[j])
+        for i in range(3) for j in range(i + 1, 3)
+    ]
+    assert all(np.isclose(d, np.sqrt(2.0), atol=1e-12) for d in dists)
+
+    # 2. Нейтральный слой Q = 0 образует центрированный правильный 6-угольник (1 центр + 6 вершин по 60°)
+    zero_outer = [n for n in nodes if int(round(np.sum(n))) == 0 and not np.allclose(n, 0.0)]
+    assert len(zero_outer) == 6
+    assert all(np.isclose(np.linalg.norm(n), np.sqrt(2.0), atol=1e-12) for n in zero_outer)

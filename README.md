@@ -45,18 +45,21 @@ where:
 * **$-1$ (Receptive / Micro / Light Vertex):** Localization, decay/dissipation, low-energy or light-generation states.
 * **$0$ (Equilibrium / Zero-Point Focal Attractor):** Phase balance, symmetry stabilization, and zero-net-charge mediation.
 
-### 2.2. Triangulated Simplex Topology ($\Omega_3 = \mathbb{T}^3$)
-Extending $\mathbb{T}$ across three orthogonal structural axes—**Interaction Dynamics ($X$)**, **Matter Substance ($Y$)**, and **Mixing Geometry ($Z$)**—defines the 27-node fundamental manifold:
+### 2.2. Balanced Ternary Cell Complex & Triadic Simplex Structure ($\Omega_3 = \mathbb{T}^3$)
 
-$$\Omega_3 = \{-1, 0, +1\}^3, \quad |\Omega_3| = 3^3 = 27$$
+The 27-node fundamental manifold is constructed by extending $\mathbb{T} = \{-1, 0, +1\}$ across orthogonal axes of **Interaction Dynamics ($X$)**, **Matter Substance ($Y$)**, and **Mixing Geometry ($Z$)**:
 
-Geometrically, $\Omega_3$ is organized as **three nested 9-node triangular strata** (each composed of three interlocking triadic triangles) connected by exactly **$54$ internal edges** ($2n \cdot 3^{n-1}$ for $n=3$, or $18$ edges per layer), forming a rigid **3D tensegrity simplex**. Node connectivity follows a strict four-tier structural hierarchy:
-* **8 Extremal Polar Vertices** $(\pm 1, \pm 1, \pm 1)$: Degree $3$ (outer triangular tips).
-* **12 Edge-Midpoint Nodes** (e.g., $(1, 1, 0)$): Degree $4$.
-* **6 Stratum-Face Centers** (e.g., $(1, 0, 0)$): Degree $5$.
-* **1 Central Focal Hub** $(0, 0, 0)$: **Degree $6$** (maximal orthogonal connectivity across $\pm X, \pm Y, \pm Z$, acting as the central focal axis stabilizing all three triangular layers).
+$$\Omega_3 = P_3 \square P_3 \square P_3 = \{-1, 0, +1\}^3, \quad |\Omega_3| = 3^3 = 27$$
 
-![3D Lattice of the Kretov Matrix](kretov_matrix_3d.png)
+To reconcile spatial and phase properties, $\Omega_3$ combines a coordinate structure with triadic symmetries:
+
+1. **Spatial 1-Skeleton (54 Edges):** Edges transition through the equilibrium mediator $0$ ($-1 \leftrightarrow 0 \leftrightarrow +1$), producing $54$ orthogonal edges ($18$ per axis), $36$ elementary plaquettes, and an Euler characteristic $\chi(\Omega_3^{(2)}) = 9$ for the 2-skeleton and $\chi_{3D} = 1$ for the 3D cell complex.
+2. **Triadic Simplex & Phase Geometry:** Triangular rigidity is realized via algebraic phase triangles (cyclic shifts $C^3 = I$ forming $120^\circ$ symmetry in phase space) and equipotential triangular/hexagonal cross-sections along the main diagonal $Q = x + y + z = \text{const}$.
+
+The node connectivity follows a hierarchical structure ranging from $8$ extremal polar vertices (degree $3$) to a central focal hub at $(0, 0, 0)$ with **degree $6$**.
+
+![3D Lattice of the Kretov Matrix](https://github.com)
+
 
 ### 2.3. Exact Eigenvalue Spectrum of the 27-Node Graph
 Computing the exact adjacency spectrum of the 27-node, 54-edge triangulated lattice reveals that its energy levels are strictly quantized in integer multiples of $\sqrt{2}$:

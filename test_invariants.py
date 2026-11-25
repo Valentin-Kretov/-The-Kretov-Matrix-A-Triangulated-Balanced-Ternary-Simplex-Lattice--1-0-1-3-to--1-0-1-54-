@@ -413,29 +413,30 @@ def test_v70_minkowski_dispersion_continuum_limit():
 
 
 def test_v70_ternary_decimation_rg_running():
-    """Verify ab-initio threshold RG decimation across Layer II fermion nodes from M_Z to m_e."""
+    """Verify ab-initio threshold RG decimation across Layer II nodes with QCD confinement threshold."""
     import math
 
     ln3 = math.log(3.0)
     two_pi = 2.0 * math.pi
+    lambda_qcd = 0.210  # QCD confinement threshold (GeV) locking light quarks (u, d, s) into hadrons
 
-    # Layer II charged fermions: (mass_GeV, N_colors * Q_f^2)
+    # Layer II charged fermions: (effective_decoupling_scale_GeV, N_colors * Q_f^2)
     layer2_fermions = [
-        (4.18,    3 * (1/3)**2),  # bottom
-        (1.77686, 1 * (-1)**2),   # tau
-        (1.27,    3 * (2/3)**2),  # charm
-        (0.0934,  3 * (1/3)**2),  # strange
-        (0.10566, 1 * (-1)**2),   # muon
-        (0.00467, 3 * (1/3)**2),  # down
-        (0.00216, 3 * (2/3)**2),  # up
-        (0.000511,1 * (-1)**2),   # electron
+        (4.18,       3 * (1/3)**2),  # bottom
+        (1.77686,    1 * (-1)**2),   # tau
+        (1.27,       3 * (2/3)**2),  # charm
+        (lambda_qcd, 3 * (1/3)**2),  # strange (confined below Lambda_QCD)
+        (0.10566,    1 * (-1)**2),   # muon
+        (lambda_qcd, 3 * (1/3)**2),  # down (confined below Lambda_QCD)
+        (lambda_qcd, 3 * (2/3)**2),  # up (confined below Lambda_QCD)
+        (0.000511,   1 * (-1)**2),   # electron
     ]
 
     # Stepwise decimation from M_Z (91.1876 GeV) down to m_e (0.000511 GeV)
     alpha_inv = 127.95
     mu_start = 91.1876
     mu_end = 0.000511
-    n_substeps = 1000
+    n_substeps = 2000
     d_ln_mu = math.log(mu_start / mu_end) / n_substeps
 
     for step in range(n_substeps):

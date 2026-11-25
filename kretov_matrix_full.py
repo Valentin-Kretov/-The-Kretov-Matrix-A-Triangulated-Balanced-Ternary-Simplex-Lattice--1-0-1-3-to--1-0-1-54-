@@ -57,9 +57,12 @@ def visualize_3d_lattice():
     coords = list(itertools.product([-1, 0, 1], repeat=3))
     fig = plt.figure(figsize=(10, 8))
     ax = fig.add_subplot(111, projection="3d")
-    for x, y, z in coords:
-        if (x, y, z) != (0, 0, 0):
-            ax.plot([0, x], [0, y], [0, z], color="gray", alpha=0.2, linewidth=0.8)
+    for i in range(len(coords)):
+        for j in range(i + 1, len(coords)):
+            u, v = coords[i], coords[j]
+            if sum(abs(a - b) for a, b in zip(u, v)) == 1:
+                ax.plot([u[0], v[0]], [u[1], v[1]], [u[2], v[2]], color="gray", alpha=0.28, linewidth=0.9)
+
     for x, y, z in coords:
         q = x + y + z
         if (x, y, z) == (0, 0, 0):

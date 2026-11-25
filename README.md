@@ -9,7 +9,7 @@
 
 **Author:** Valentin Aleksandrovich Kretov (Кретов Валентин Александрович)  
 **Document Type:** Comprehensive Theoretical Preprint & Computational Specification  
-**Version:** 7.2 (Pure Zero-Adjustment Root Algebra & Topological Consistency Edition)
+**Version:** 7.3 (Unified 3–6–9 Generator $({-1, 0, +1}^6)^9$, Heat-Kernel Loop Closure & Regge-Holographic Gravity)
 **DOI:** `10.5281/zenodo.24419886`  
 **License:** MIT (Code) / CC BY 4.0 (Text & Figures)  
 
@@ -354,6 +354,7 @@ To maintain rigorous scientific transparency, we explicitly state the current bo
 - `kretov_equilibrium_audit.py` — Combinatorial and simulated-annealing solver verifying antipodal dipole pairing ($13$ pairs) and global 3D center-of-mass / inertia tensor equilibrium around $\theta_{\text{QCD}} = 0$ (validated via `test_v61_central_dipole_equilibrium` in `test_invariants.py`).
 - `kretov_rmt_analytical.py` — Exact algebraic proof of the $3^6 = 729$ symmetric ternary operator spectrum ($71/243$ degeneracy theorem, $48$-element silver-ratio $O_h$ orbit, and GOE Wigner semicircle scaling for $N = 9, 27$; verified by `test_v62_rmt_spectral_theorem` in `test_invariants.py`).
 - `kretov_quantum_resonator.py` — Unitary Schrödinger evolution solver demonstrating exact periodic state revival ($T = \pi\sqrt{2}$), shell breathing $(1/8, 3/8, 3/8, 1/8)$, and bipartite $54$-node Rabi energy transfer (verified by `test_v63_quantum_resonator` in `test_invariants.py`).
+- `kretov_quantum_gravity.py` — Discrete Regge calculus vacuum flatness verifier, Bekenstein–Hawking $1/4$ area law derivation ($a_0 = 2\sqrt{\ln 3}\,\ell_{\text{Pl}}$), and parameter-free cosmological constant closure ($\Lambda \approx 2.494 \times 10^{-122}$ at $3^{243}$).
 
 
 • CITATION.cff, requirements.txt, & LICENSE — Open Science citation metadata (DOI 10.5281/zenodo.24419887), Python dependencies, and MIT / CC BY 4.0 licenses.

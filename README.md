@@ -308,6 +308,7 @@ To maintain rigorous scientific transparency, we explicitly state the current bo
 - `test_invariants.py` — Automated `pytest` verification suite validating lattice topology ($27$ nodes, $54$ edges, `{1, 3, 6, 7, 6, 3, 1}` degeneracy pyramid), PDG constant accuracy, and CGLMP qutrit Bell bounds.
 - `kretov_interactive_3d.py` — Generates the interactive 3D simplex visualization (`kretov_matrix_3d_interactive.html`) deployed via GitHub Pages.
 - `kretov_equilibrium_audit.py` — Combinatorial and simulated-annealing solver verifying antipodal dipole pairing ($13$ pairs) and global 3D center-of-mass / inertia tensor equilibrium around $\theta_{\text{QCD}} = 0$ (validated via `test_v61_central_dipole_equilibrium` in `test_invariants.py`).
+- `kretov_rmt_analytical.py` — Exact algebraic proof of the $3^6 = 729$ symmetric ternary operator spectrum ($71/243$ degeneracy theorem, $48$-element silver-ratio $O_h$ orbit, and GOE Wigner semicircle scaling for $N = 9, 27$; verified by `test_v62_rmt_spectral_theorem` in `test_invariants.py`).
 
 
 • CITATION.cff, requirements.txt, & LICENSE — Open Science citation metadata (DOI 10.5281/zenodo.24419887), Python dependencies, and MIT / CC BY 4.0 licenses.

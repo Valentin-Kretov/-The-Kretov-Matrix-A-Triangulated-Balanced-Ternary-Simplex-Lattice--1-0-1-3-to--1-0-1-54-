@@ -32,7 +32,7 @@ def test_lattice_topology_and_spectrum():
 
 def test_fundamental_constants_accuracy():
     # Inverse Fine-Structure Constant (alpha^-1)
-    alpha_inv_calc = (4 * np.pi**3 + np.pi**2 + np.pi) - 1.0 / (54.0 * 60.0)
+    alpha_inv_calc = (4 * np.pi**3 + np.pi**2 + np.pi) - (3.0 / (4.0 * np.pi * (3**6)))
     alpha_inv_pdg = 137.035999
     assert abs(alpha_inv_calc - alpha_inv_pdg) / alpha_inv_pdg < 1e-7
 
@@ -229,12 +229,6 @@ def test_v60_zero_parameter_closure():
     # PDG ratios: m_s / m_b ~ 93.4 / 4180, m_mu / m_tau ~ 105.66 / 1776.86
     pdg_geom_mean = math.sqrt((93.4 / 4180.0) * (105.66 / 1776.86))
     assert math.isclose(epsilon, pdg_geom_mean, rel_tol=0.02)
-
-if __name__ == "__main__":
-    test_lattice_topology_and_spectrum()
-    test_fundamental_constants_accuracy()
-    test_cglmp_bell_bound()
-    print("ALL KRETOV MATRIX INVARIANTS VERIFIED SUCCESSFULLY!")
 
 
 def test_v61_central_dipole_equilibrium():
@@ -510,3 +504,34 @@ def test_v71_equipotential_simplex_triangulation():
     zero_outer = [n for n in nodes if int(round(np.sum(n))) == 0 and not np.allclose(n, 0.0)]
     assert len(zero_outer) == 6
     assert all(np.isclose(np.linalg.norm(n), np.sqrt(2.0), atol=1e-12) for n in zero_outer)
+
+
+def test_v73_unified_369_and_gravity():
+    """Verify unified 3-6-9 generator ({-1,0,+1}^6)^9 and discrete Regge-Holographic gravity."""
+    from kretov_quantum_gravity import verify_quantum_gravity_closure
+    res = verify_quantum_gravity_closure()
+    assert res["cycle_6"] ** res["stratum_9"] == 3 ** 54
+    assert abs(res["deficit_angle_vacuum"]) < 1e-15
+    assert abs(res["a0_over_lpl"] - 2.096294) < 1e-5
+
+
+if __name__ == "__main__":
+    test_lattice_topology_and_spectrum()
+    test_fundamental_constants_accuracy()
+    test_cglmp_bell_bound()
+    test_v35_fractal_rg_and_kurtosis()
+    test_v35_analytical_noise_and_jarlskog()
+    test_v40_continuum_and_topology()
+    test_v50_sm_gauge_and_delta27_potential()
+    test_v60_zero_parameter_closure()
+    test_v61_central_dipole_equilibrium()
+    test_v62_rmt_spectral_theorem()
+    test_v63_quantum_resonator()
+    test_v70_cw_cell_complex_invariants()
+    test_v70_discrete_euler_lagrange_evolution()
+    test_v70_ternary_decimation_rg_running()
+    test_v70_experimentum_crucis_predictions()
+    test_v70_multiloop_functional_integral_convergence()
+    test_v71_equipotential_simplex_triangulation()
+    test_v73_unified_369_and_gravity()
+    print("ALL 18 KRETOV MATRIX INVARIANTS (v7.3) VERIFIED SUCCESSFULLY!")

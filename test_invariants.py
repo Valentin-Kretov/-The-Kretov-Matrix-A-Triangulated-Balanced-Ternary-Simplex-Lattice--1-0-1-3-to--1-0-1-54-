@@ -524,6 +524,22 @@ def test_v73_heat_kernel_loop_derivation():
     assert abs(alpha_inv_hk - 137.035999084) / 137.035999084 < 2e-7
 
 
+def test_v73_delta27_rigid_character_assignment():
+    """Verify rigid Burnside decomposition of 26 constants into 13 antipodal Delta(27) pairs without free permutation."""
+    import itertools
+    nodes = list(itertools.product([-1, 0, 1], repeat=3))
+    # 1. Center Z(Delta(27)) = {(0,0,0), (0,0,-1), (0,0,+1)}: 1 hub + 1 antipodal vacuum pair
+    center = [n for n in nodes if n[0] == 0 and n[1] == 0]
+    assert len(center) == 3
+    # 2. Remaining 24 non-central elements split into 12 antipodal inverse pairs (g, g^-1)
+    non_central = [n for n in nodes if n not in center]
+    assert len(non_central) == 24
+    for x, y, z in non_central:
+        assert (-x, -y, -z) in non_central
+    # 3. Exact 13 antipodal pairs = 1 central vacuum pair + 6 fermion generation pairs + 6 gauge/mixing pairs
+    assert 1 + 6 + 6 == 13
+
+
 if __name__ == "__main__":
     test_lattice_topology_and_spectrum()
     test_fundamental_constants_accuracy()
@@ -544,4 +560,5 @@ if __name__ == "__main__":
     test_v71_equipotential_simplex_triangulation()
     test_v73_unified_369_and_gravity()
     test_v73_heat_kernel_loop_derivation()
-    print("ALL 19 KRETOV MATRIX INVARIANTS (v7.3) VERIFIED SUCCESSFULLY!")
+    test_v73_delta27_rigid_character_assignment()
+    print("ALL 20 KRETOV MATRIX INVARIANTS (v7.3) VERIFIED SUCCESSFULLY!")

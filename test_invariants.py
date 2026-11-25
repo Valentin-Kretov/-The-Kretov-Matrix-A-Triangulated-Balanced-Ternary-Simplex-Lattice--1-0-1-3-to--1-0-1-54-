@@ -413,27 +413,39 @@ def test_v70_minkowski_dispersion_continuum_limit():
 
 
 def test_v70_ternary_decimation_rg_running():
-    """Verify discrete RG running from M_Z to IR limit and GUT unification via ln(3) decimation steps."""
+    """Verify ab-initio threshold RG decimation across Layer II fermion nodes from M_Z to m_e."""
     import math
 
     ln3 = math.log(3.0)
     two_pi = 2.0 * math.pi
 
-    # 1. Abelian screening of alpha_em^-1 across 6 decimation steps (M_Z ~ 91.2 GeV -> m_e scale: 91.2 / 3^11 ~ 0.515 MeV)
-    # Using effective screening slope gamma_em = 80/9 above quark thresholds (~5.8 steps)
-    alpha_inv_MZ = 127.95
-    gamma_em = 80.0 / 9.0
-    steps_to_IR = math.log(91.1876 / 0.000511) / ln3  # ~11.007 ternary steps
-    # Accounting for stepwise fermion threshold decoupling (effective factor ~0.58)
-    alpha_inv_IR = alpha_inv_MZ + (gamma_em * 0.58 / two_pi) * (steps_to_IR * ln3)
-    assert 136.5 < alpha_inv_IR < 137.5
+    # Layer II charged fermions: (mass_GeV, N_colors * Q_f^2)
+    layer2_fermions = [
+        (4.18,    3 * (1/3)**2),  # bottom
+        (1.77686, 1 * (-1)**2),   # tau
+        (1.27,    3 * (2/3)**2),  # charm
+        (0.0934,  3 * (1/3)**2),  # strange
+        (0.10566, 1 * (-1)**2),   # muon
+        (0.00467, 3 * (1/3)**2),  # down
+        (0.00216, 3 * (2/3)**2),  # up
+        (0.000511,1 * (-1)**2),   # electron
+    ]
 
-    # 2. Non-abelian convergence of SU(2) and SU(3) toward GUT scale (n ~ 28 steps above M_Z)
-    a2_inv_MZ = 29.57
-    a3_inv_MZ = 8.47  # 1 / 0.1180
-    gamma_2 = -19.0 / 6.0
-    gamma_3 = -7.0
-    n_gut = 28
-    a2_inv_GUT = a2_inv_MZ - (gamma_2 / two_pi) * (n_gut * ln3)
-    a3_inv_GUT = a3_inv_MZ - (gamma_3 / two_pi) * (n_gut * ln3)
+    # Stepwise decimation from M_Z (91.1876 GeV) down to m_e (0.000511 GeV)
+    alpha_inv = 127.95
+    mu_start = 91.1876
+    mu_end = 0.000511
+    n_substeps = 1000
+    d_ln_mu = math.log(mu_start / mu_end) / n_substeps
+
+    for step in range(n_substeps):
+        mu = mu_start * math.exp(-(step + 0.5) * d_ln_mu)
+        gamma_active = sum((4.0 / 3.0) * nc_q2 for m_f, nc_q2 in layer2_fermions if mu > m_f)
+        alpha_inv += (gamma_active / two_pi) * d_ln_mu
+
+    assert abs(alpha_inv - 137.036) < 0.15
+
+    # Non-abelian convergence of SU(2) and SU(3) toward GUT scale (n = 28 ternary steps above M_Z)
+    a2_inv_GUT = 29.57 - (-19.0 / 6.0 / two_pi) * (28 * ln3)
+    a3_inv_GUT = 8.47 - (-7.0 / two_pi) * (28 * ln3)
     assert abs(a2_inv_GUT - a3_inv_GUT) < 2.0

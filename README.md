@@ -9,7 +9,7 @@
 
 **Author:** Valentin Aleksandrovich Kretov (Кретов Валентин Александрович)  
 **Document Type:** Comprehensive Theoretical Preprint & Computational Specification  
-**Version:** 7.0 (First-Principles Variational Dynamics, Lorentzian Continuum Limit & RG Decimation Edition)
+**Version:** 7.1 (First-Principles Variational Dynamics, Multi-Loop UV/IR Finiteness & RG Decimation Edition)
 **DOI:** `10.5281/zenodo.24419886`  
 **License:** MIT (Code) / CC BY 4.0 (Text & Figures)  
 

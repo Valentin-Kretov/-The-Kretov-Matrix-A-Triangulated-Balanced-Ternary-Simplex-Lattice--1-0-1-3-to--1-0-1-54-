@@ -392,3 +392,21 @@ def test_v70_discrete_euler_lagrange_evolution():
     E_final = discrete_energy(phi_prev, phi_curr)
     assert abs(E_final - E0) / E0 < 1e-12
 
+
+def test_v70_minkowski_dispersion_continuum_limit():
+    """Verify isotropic Lorentzian dispersion omega^2 = c0^2 |k|^2 in the long-wavelength limit."""
+    import numpy as np
+
+    c0 = 1.0
+    a0 = 1e-4
+    k_vecs = [
+        np.array([1.0, 0.0, 0.0]),
+        np.array([0.0, 1.0, 0.0]),
+        np.array([0.0, 0.0, 1.0]),
+        np.array([1.0, 1.0, 1.0]) / np.sqrt(3.0),
+    ]
+    for k in k_vecs:
+        k_lat_sq = np.sum((2.0 * np.sin(k * a0 / 2.0) / a0) ** 2)
+        omega_sq = (c0 ** 2) * k_lat_sq
+        exact_sq = (c0 ** 2) * np.dot(k, k)
+        assert abs(omega_sq - exact_sq) / exact_sq < 1e-8

@@ -179,6 +179,10 @@ To elevate the discrete lattice action $S[\Phi, U]$ from a phenomenological mode
 
 3. **Ab-Initio Ternary Decimation & Discrete RG Flow ($\Omega_n \to \Omega_{n-1}$):**
    Discrete scaling laws are derived directly via Kadanoff block-spin decimation of three-link chains across fractal levels $a_n = a_0 \cdot 3^n$ ($36$ plaquettes, $27$ node multiplets), yielding exact discrete recursion relations for inverse couplings $\alpha_i^{-1}(n - 1) = \alpha_i^{-1}(n) + \frac{\gamma_i}{2\pi} \ln 3$. This accounts for abelian screening ($\gamma_{\text{em}} = +80/9$) driving $\alpha^{-1}$ from $\approx 127.95$ to $137.036$, as well as non-abelian antiscreening ($\gamma_2 = -19/6$, $\gamma_3 = -7$) leading toward Grand Unification at $n \approx 31$.
+4. **All-Order Multi-Loop Convergence of the Functional Integral on $\Omega_{54}$:**
+   - **Exact Integer Laplacian Spectrum:** The combinatorial graph Laplacian $L = D - A$ of the ternary chain $P_3$ has exact eigenvalues $\{0, 1, 3\}$, yielding bounded integer eigenvalues $\Lambda \in [0, 3n]$ on $\Omega_n = P_3^{\square n}$ (with ceiling $\Lambda_{\max}(54) = 162$).
+   - **UV & IR Finiteness:** Projecting out the unique zero mode leaves an exact spectral gap $\Lambda_{\min}^+ = 1$ for all $n \geq 1$. Consequently, every propagator eigenvalue satisfies $0 < \lambda_G \leq 1$ even in the massless limit ($m = 0$), eliminating both infrared poles and ultraviolet divergences without dimensional regularization.
+   - **Non-Perturbative Compactness Bound:** Because matter fields obey $|\Phi_v| = 1$ and link variables $U_{uv} \in SU(3)$ are integrated over the compact normalized Haar measure ($\int dU = 1$), the partition function $Z_{\Omega_{54}} = \int \mathcal{D}\Phi\,\mathcal{D}U\,e^{-S[\Phi,U]}$ satisfies $0 < e^{-S_{\max}} \leq Z_{\Omega_{54}} \leq e^{+S_{\max}} < \infty$, guaranteeing absolute multi-loop convergence to all orders.
 
 
 ### 4.4. Emergence of the Standard Model Gauge Group $SU(3)_C \times SU(2)_L \times U(1)_Y$ & Unified $\Delta(27)$ Yukawa Potential

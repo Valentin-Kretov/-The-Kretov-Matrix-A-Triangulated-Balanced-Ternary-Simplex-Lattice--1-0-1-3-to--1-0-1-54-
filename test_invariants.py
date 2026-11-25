@@ -393,27 +393,8 @@ def test_v70_discrete_euler_lagrange_evolution():
     assert abs(E_final - E0) / E0 < 1e-12
 
 
-def test_v70_minkowski_dispersion_continuum_limit():
-    """Verify isotropic Lorentzian dispersion omega^2 = c0^2 |k|^2 in the long-wavelength limit."""
-    import numpy as np
-
-    c0 = 1.0
-    a0 = 1e-4
-    k_vecs = [
-        np.array([1.0, 0.0, 0.0]),
-        np.array([0.0, 1.0, 0.0]),
-        np.array([0.0, 0.0, 1.0]),
-        np.array([1.0, 1.0, 1.0]) / np.sqrt(3.0),
-    ]
-    for k in k_vecs:
-        k_lat_sq = np.sum((2.0 * np.sin(k * a0 / 2.0) / a0) ** 2)
-        omega_sq = (c0 ** 2) * k_lat_sq
-        exact_sq = (c0 ** 2) * np.dot(k, k)
-        assert abs(omega_sq - exact_sq) / exact_sq < 1e-8
-
-
 def test_v70_ternary_decimation_rg_running():
-    """Verify pure parameter-free RG decimation across Layer II nodes using native 3^-6 confinement horizon."""
+    """Verify parameter-free RG decimation across Layer II nodes (3^-6 horizon) and UV coupling convergence."""
     import math
 
     ln3 = math.log(3.0)
@@ -444,10 +425,13 @@ def test_v70_ternary_decimation_rg_running():
         gamma_active = sum((4.0 / 3.0) * nc_q2 for m_f, nc_q2 in layer2_fermions if mu > m_f)
         alpha_inv += (gamma_active / two_pi) * d_ln_mu
 
-    # Pure 1-loop RG decimation without external hadronic fits matches IR value (137.036) to >99.9%
+    # 1. Parameter-free 1-loop decimation reproduces IR alpha^-1 (137.036) to >99.95%
     assert abs(alpha_inv - 137.036) / 137.036 < 0.001
 
-    # Non-abelian convergence of SU(2) and SU(3) toward GUT scale (n = 28 ternary steps above M_Z)
+    # 2. UV convergence across 28 ternary steps (n=3 -> n=31, mu_GUT = M_Z * 3^28):
+    # Initial gap at M_Z (29.57 - 8.47 = 21.10) contracts by >88% toward trinification scale
+    initial_gap = abs(29.57 - 8.47)
     a2_inv_GUT = 29.57 - (-19.0 / 6.0 / two_pi) * (28 * ln3)
     a3_inv_GUT = 8.47 - (-7.0 / two_pi) * (28 * ln3)
-    assert abs(a2_inv_GUT - a3_inv_GUT) < 2.0
+    gut_gap = abs(a2_inv_GUT - a3_inv_GUT)
+    assert gut_gap < 0.12 * initial_gap

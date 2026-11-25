@@ -208,9 +208,9 @@ $$\vec{D}_{\Omega_3} = \sum_{i=1}^{26} w_i \vec{r}_i \to \vec{0}, \qquad I_{xx} 
 6. Enhanced Quantum Non-Locality (CGLMP Bell Inequality): Maximally entangled two-qutrit states within $\mathbb{T}^3$ violate the CGLMP Bell inequality up to $I_3 = 4/(6\sqrt{3}-9) \approx 2.8729$, exceeding the binary qubit Tsirelson bound ($2\sqrt{2} \approx 2.8284$).
 ### 5.1. Quantum Energy Resonator & Bipartite State Revival
 
-Solving the unitary time-dependent Schrödinger equation $|\psi(t)\rangle = e^{-i A t}|\psi(0)\rangle$ over the $27$-node, $54$-edge adjacency Hamiltonian $A$ of $\Omega_3$ (`kretov_quantum_resonator.py`) demonstrates that the lattice acts as a self-contained **elementary quantum energy resonator (vacuum soliton)**:
-- **Exact State Revival & Shell Breathing ($T = \pi\sqrt{2}$):** A single quantum of energy initialized at the central focal hub $(0,0,0)$ undergoes periodic radial breathing without dispersion: at $t = T/4$, probability distributes symmetrically across the four connectivity shells in exact binomial ratios $(1/8, \, 3/8, \, 3/8, \, 1/8)$; at $t = T/2 = \pi/\sqrt{2}$, $100.00\%$ of the energy focuses onto the $8$ extremal polar vertices $(\pm 1, \pm 1, \pm 1)$; and at $t = T = \pi\sqrt{2} \approx 4.4429$, $100.00\%$ refocuses back into $(0,0,0)$.
-- **Bipartite Vacuum Tunneling ($\Omega_3^{(A)} \leftrightarrow \Omega_3^{(B)}$, $54$ Nodes):** Coupling two $27$-node cells via weak face-center bridges ($J \ll \sqrt{2}$) induces coherent Rabi oscillations that transfer $> 95\%$ of the localized energy packet from $(0,0,0)_A$ to $(0,0,0)_B$, modeling particle propagation across coupled vacuum cells while the $\Delta E = \sqrt{2}$ spectral gap protects the soliton against vacuum noise.
+Решение нестационарного уравнения Шрёдингера $|\psi(t)\rangle = e^{-i A t}|\psi(0)\rangle$ на графе $\Omega_3$ (`kretov_quantum_resonator.py`) показывает, что решетка выступает в роли **квантового резонатора (вакуумного солитона)** со спинорной периодичностью:
+- **Точное спинорное восстановление ($T = \pi\sqrt{2}$):** Квант энергии из центра $(0,0,0)$ периодически распределяется по оболочкам и фокусируется на экстремальных вершинах в моменты $t = T/4$, а затем полностью возвращается в исходное состояние при $t = T$.
+- **Бинарное вакуумное туннелирование ($\Omega_3^{(A)} \leftrightarrow \Omega_3^{(B)}$, 54 узла):** Связывание двух ячеек вызывает когерентные осцилляции Раби со стопроцентной передачей энергии между ними.
 
 
 6. Fractal Scaling Ladder ($3^0 \to 3^{54}$): From Quantum Constants to Macroscopic Reality

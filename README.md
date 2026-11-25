@@ -9,7 +9,7 @@
 
 **Author:** Valentin Aleksandrovich Kretov (Кретов Валентин Александрович)  
 **Document Type:** Comprehensive Theoretical Preprint & Computational Specification  
-**Version:** 6.1 (Central Dipole Equilibrium & Cosmological Counterweight Edition)
+**Version:** **Version:** 6.2 (Analytical RMT Spectral Decomposition & Wigner Semicircle Edition)
 **DOI:** `10.5281/zenodo.24419886`  
 **License:** MIT (Code) / CC BY 4.0 (Text & Figures)  
 

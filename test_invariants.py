@@ -390,4 +390,5 @@ def test_v70_discrete_euler_lagrange_evolution():
         phi_prev, phi_curr = phi_curr, phi_next
 
     E_final = discrete_energy(phi_prev, phi_curr)
-    assert abs(E_final - E0) < 1e-12
+    assert abs(E_final - E0) / E0 < 1e-12
+
